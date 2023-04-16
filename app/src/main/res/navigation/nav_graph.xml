@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/authorization">
+
+    <fragment
+        android:id="@+id/authorization"
+        android:name="com.example.partnersapp.view.screen.authorization.Authorization"
+        android:label="fragment_authorization"
+        tools:layout="@layout/fragment_authorization" >
+        <action
+            android:id="@+id/action_authorization_to_partnersScreen"
+            app:destination="@id/partnersScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/partnersScreen"
+        android:name="com.example.partnersapp.view.screen.authorization.partners.PartnersScreen"
+        android:label="fragment_partners_screen"
+        tools:layout="@layout/fragment_partners_screen" >
+        <action
+            android:id="@+id/action_partnersScreen_to_authorization"
+            app:destination="@id/authorization" />
+    </fragment>
+</navigation>
