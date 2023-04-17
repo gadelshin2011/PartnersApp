@@ -15,7 +15,7 @@ class Authorization : Fragment() {
     lateinit var binding: FragmentAuthorizationBinding
     var webRepo= WebRepository()
     private val viewModel: AuthViewModel by activityViewModels()
-    val appKey = "IQwVsMInpMN8qsKBjwjU'"
+    private val appKey = "sCNXJoLWDSchbDRouriS"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +35,8 @@ class Authorization : Fragment() {
     private fun setListener() {
         binding.buttonLogPass.setOnClickListener {
             binding.apply {
-                edLogin.setText("72444000").toString()
-                edPassword.setText("1234567890").toString()
+                edLogin.setText("72826119").toString()
+                edPassword.setText("0123456789").toString()
             }
 
         }
@@ -48,7 +48,6 @@ class Authorization : Fragment() {
             viewModel.requestToken(AuthRequest(
                 login = binding.edLogin.text.toString(),
                 password = binding.edPassword.text.toString(),
-                AppKey = appKey
             ))
         }
 

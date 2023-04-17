@@ -27,10 +27,10 @@ open class AuthViewModel: ViewModel() {
 
      fun requestToken(authRequest: AuthRequest) {
         viewModelScope.launch {
-            var response = webRepo.retrofit.auth(authRequest)
+            val response = webRepo.retrofit.auth(authRequest)
             Log.d("MyLog","$response")
-            var token = response.body()?.detail?.access
-            Log.d("MyLog","$token")
+//            val token = response.body()?.detail?.access
+//            Log.d("MyLog","$token")
 
 
 
