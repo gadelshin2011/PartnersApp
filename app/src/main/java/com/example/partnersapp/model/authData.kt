@@ -1,6 +1,6 @@
 package com.example.partnersapp.model
 
-data class authorization(
+data class authData(
     val detail: Detail,
     val error_message: Any,
     val status: String,

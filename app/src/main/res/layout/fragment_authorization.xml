@@ -83,9 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="12dp"
-            android:hint="Errors"
-            android:textColor="@color/red"
-            android:visibility="gone" />
+            android:textColor="@color/red" />
 
         <Button
             android:id="@+id/btnAuthorization"
@@ -97,6 +95,7 @@
             android:background="@drawable/element_style"
             android:padding="16dp"
             android:text="Далее"
+            android:enabled="false"
             android:textAlignment="center"
             android:textSize="17sp"
             android:textStyle="bold"
