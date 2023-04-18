@@ -1,16 +1,26 @@
 package com.example.partnersapp.view.screen.authorization.partners
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.partnersapp.R
-import com.example.partnersapp.databinding.FragmentAuthorizationBinding
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
+import com.example.partnersapp.presenter.adapter.RcAdapterPartners
+import com.example.partnersapp.presenter.network.WebRepository
+import com.example.partnersapp.view.screen.authorization.AuthViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
+    private lateinit var recyclerView: RecyclerView
+    var webRepo = WebRepository()
+    private val adapterRc = RcAdapterPartners()
+    private val viewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,12 +33,26 @@ class PartnersScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        init()
+       init()
     }
 
     private fun init() {
+        initialization()
+        showData()
+    }
 
+    private fun showData() {
+//
+//        viewModel.partners.onEach {
+//            adapterRc.setList(it)
+//        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+//        viewModel.requestPartners()
+    }
+
+    private fun initialization() {
+        recyclerView = binding.rcViewPartners
+        recyclerView.adapter = adapterRc
     }
 
 

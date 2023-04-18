@@ -1,13 +1,10 @@
 package com.example.partnersapp.presenter.network
 
 import com.example.partnersapp.model.AuthRequest
-import com.example.partnersapp.model.Detail
-import com.example.partnersapp.model.authData
+import com.example.partnersapp.model.AuthData
+import com.example.partnersapp.model.PartnersModel
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface InterfaceApi {
     @Headers(
@@ -15,15 +12,15 @@ interface InterfaceApi {
         "AppKey:sCNXJoLWDSchbDRouriS"
     )
     @POST("/api/v0/token/")
-    suspend fun auth(@Body authRequest: AuthRequest): Response<authData>
+    suspend fun auth(@Body authRequest: AuthRequest): Response<AuthData>
 
 
     @Headers(
         "withAuth: false",
-        "AppKey:sCNXJoLWDSchbDRouriS",
+        "AppKey:sCNXJoLWDSchbDRouriS"
     )
     @GET("/api/v0/partner/all_partners/?city_id=1&page=1&partner_id=1")
-    suspend fun getPartners()
+    suspend fun getPartners(@Header("Authorization") tokenM:String) : PartnersModel
 
 
 

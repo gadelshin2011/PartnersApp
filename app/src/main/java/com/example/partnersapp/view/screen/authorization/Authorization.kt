@@ -60,8 +60,8 @@ class Authorization : Fragment() {
     private fun setListener() {
         binding.buttonLogPass.setOnClickListener {
             binding.apply {
-                edLogin.setText("72826119").toString()
-                edPassword.setText("0123456789").toString()
+                edLogin.setText("72855249").toString()
+                edPassword.setText("8783446692").toString()
             }
 
         }
@@ -70,14 +70,14 @@ class Authorization : Fragment() {
 
     private fun init() {
         binding.btnAuthorization.setOnClickListener {
-
-            if (binding.edLogin.text.isEmpty() || binding.edPassword.text.isEmpty()) {
-                //binding.tvError.visibility = View.VISIBLE
-                binding.tvError.text = "Неверный логин или пароль"
-            }
-            if (binding.edLogin.text.isNotEmpty() && binding.edPassword.text.isNotEmpty()) {
-                //binding.tvError.visibility = View.GONE
-                binding.tvError.text = ""
+//
+//            if (binding.edLogin.text.isEmpty() || binding.edPassword.text.isEmpty()) {
+//                //binding.tvError.visibility = View.VISIBLE
+//                binding.tvError.text = "Неверный логин или пароль"
+//            }
+//            if (binding.edLogin.text.isNotEmpty() && binding.edPassword.text.isNotEmpty()) {
+//                //binding.tvError.visibility = View.GONE
+//                binding.tvError.text = ""
                 viewModel.requestToken(
                     AuthRequest(
                         login = binding.edLogin.text.toString(),
@@ -105,6 +105,6 @@ class Authorization : Fragment() {
 //
 //
 //    }
-
-
-}
+//
+//
+//}

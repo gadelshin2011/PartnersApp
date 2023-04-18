@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.partnersapp.databinding.RcItemBinding
-import com.example.partnersapp.model.authData
+import com.example.partnersapp.model.Partner
 
 class RcAdapterPartners:RecyclerView.Adapter<RcAdapterPartners.MyHolder>() {
 
-    var listItem : MutableList<authData> = mutableListOf()
+    var listItem : MutableList<Partner> = mutableListOf()
 
     class MyHolder(private val binding: RcItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(auth: authData){
+        fun bind(part: Partner){
 
         }
 
@@ -35,8 +35,8 @@ class RcAdapterPartners:RecyclerView.Adapter<RcAdapterPartners.MyHolder>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: MutableList<authData>){
-        listItem = list
+    fun setList(list: List<Partner>){
+        listItem.addAll(list)
         notifyDataSetChanged()
     }
 }
