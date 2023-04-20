@@ -13,10 +13,10 @@ interface InterfaceApi {
     )
     @POST("/api/v0/token/")
     suspend fun auth(@Body authRequest: AuthRequest): Response<AuthData>
-
+//            Response<AuthData>
 
     @Headers(
-        "withAuth: false",
+        "withAuth: true",
         "AppKey:sCNXJoLWDSchbDRouriS"
     )
     @GET("/api/v0/partner/all_partners/?city_id=1&page=1&partner_id=1")

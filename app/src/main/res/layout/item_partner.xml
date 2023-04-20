@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvRoot"
     android:layout_width="match_parent"
     android:layout_height="270dp"
-    app:cardCornerRadius="28dp"
+    app:cardCornerRadius="24dp"
     app:cardElevation="0dp"
     tools:backgroundTint="#E7E9FF">
 
-
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,11 +27,9 @@
                 android:scaleType="fitEnd"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/glCenterHorizontal"
@@ -41,9 +37,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_percent="0.5"
+                app:layout_constraintGuide_begin="206dp"
                 app:layout_constraintStart_toStartOf="parent" />
-
 
             <TextView
                 android:id="@+id/text_discount"
@@ -52,16 +47,13 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:ellipsize="end"
-                android:textColor="@color/black"
-                android:textStyle="bold"
                 android:maxLines="2"
-                tools:text="Скидка 10%"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@id/promotion_description"
                 app:layout_constraintEnd_toStartOf="@id/glCenterHorizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-
-                />
+                tools:text="Скидка 10%" />
 
             <TextView
                 android:id="@+id/promotion_description"
@@ -71,10 +63,12 @@
                 android:layout_marginTop="6dp"
                 android:ellipsize="end"
                 android:maxLines="3"
+                android:textColor="@color/grey"
                 app:layout_constraintEnd_toStartOf="@id/glCenterHorizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_discount"
                 tools:text="На первую покупку в приложении" />
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -85,16 +79,23 @@
             android:layout_height="78dp">
 
             <ImageView
+                android:id="@+id/ivBlur"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.5"
+                android:background="@android:color/white" />
+
+
+            <ImageView
                 android:id="@+id/ivLogoPartner"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="16dp"
-                android:layout_marginBottom="22dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/barEndLogo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/barEndLogo"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                tools:background="@color/red" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barEndLogo"
@@ -103,7 +104,6 @@
                 android:orientation="horizontal"
                 app:barrierDirection="end"
                 app:constraint_referenced_ids="ivLogoPartner" />
-
 
             <TextView
                 android:id="@+id/partnerName"
@@ -114,8 +114,9 @@
                 android:maxLines="1"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/barEndLogo"
-                app:layout_constraintTop_toTopOf="@+id/ivLogoPartner"
+                app:layout_constraintStart_toEndOf="@id/barEndLogo"
+                app:layout_constraintTop_toTopOf="@id/ivLogoPartner"
+                app:layout_constraintVertical_bias="0"
                 tools:text="Самокат" />
 
             <TextView
@@ -125,12 +126,16 @@
                 android:layout_marginEnd="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                app:layout_constraintBottom_toBottomOf="@+id/ivLogoPartner"
+                android:textColor="@color/grey"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/barEndLogo"
-                app:layout_constraintTop_toBottomOf="@+id/partnerName"
-                tools:text="Доставка еды"
-                />
+                app:layout_constraintStart_toEndOf="@id/barEndLogo"
+                app:layout_constraintTop_toBottomOf="@id/partnerName"
+                app:layout_constraintVertical_bias="0"
+                tools:text="Доставка еды" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</com.google.android.material.card.MaterialCardView>

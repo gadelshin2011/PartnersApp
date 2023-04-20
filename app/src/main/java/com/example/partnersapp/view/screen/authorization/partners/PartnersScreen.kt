@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
 import com.example.partnersapp.presenter.adapter.RcAdapterPartners
 import com.example.partnersapp.presenter.network.WebRepository
@@ -39,15 +41,28 @@ class PartnersScreen : Fragment() {
     private fun init() {
         initialization()
         showData()
+        setListener()
+    }
+
+    private fun setListener() {
+        binding.imBtnBack.setOnClickListener {
+            findNavController().navigate(R.id.action_partnersScreen_to_authorization)
+        }
     }
 
     private fun showData() {
-//
-//        viewModel.partners.onEach {
-//            adapterRc.setList(it)
-//        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-//        viewModel.requestPartners()
+        viewModel.partners.onEach {
+            adapterRc.setList(it)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+//        binding.tvScreenName.setOnClickListener {
+//            viewModel.requestPartners()
+//        }
+
+        viewModel.requestPartners()
+
+
     }
 
     private fun initialization() {
