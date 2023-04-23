@@ -1,8 +1,8 @@
 package com.example.partnersapp.presenter.network
 
-import com.example.partnersapp.model.AuthRequest
-import com.example.partnersapp.model.AuthData
-import com.example.partnersapp.model.PartnersModel
+import com.example.partnersapp.model.authModels.AuthRequest
+import com.example.partnersapp.model.authModels.AuthData
+import com.example.partnersapp.model.partnerModels.PartnersModel
 import retrofit2.Response
 import retrofit2.http.*
 

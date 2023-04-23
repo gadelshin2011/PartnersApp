@@ -1,4 +1,4 @@
-package com.example.partnersapp.model
+package com.example.partnersapp.model.partnerModels
 
 data class PartnersModel(
     val detail: PartnersDetail,

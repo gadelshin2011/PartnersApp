@@ -1,12 +1,11 @@
 package com.example.partnersapp.view.screen.authorization
 
+import android.util.JsonToken
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.partnersapp.model.AuthData
-import com.example.partnersapp.model.AuthRequest
-import com.example.partnersapp.model.Partner
-import com.example.partnersapp.model.PartnersModel
+import com.example.partnersapp.model.authModels.AuthRequest
+import com.example.partnersapp.model.partnerModels.Partner
 import com.example.partnersapp.presenter.network.WebRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,8 +15,6 @@ open class AuthViewModel : ViewModel() {
 
     private val webRepo = WebRepository()
     var tokenM: String = ""
-    var statusM: String = ""
-    var errorMess: String = ""
 
 
 //    private val _authDataM: MutableStateFlow<List<AuthData>> = MutableStateFlow(
@@ -37,39 +34,32 @@ open class AuthViewModel : ViewModel() {
     }
 
 
-    fun requestToken(authRequest: AuthRequest) {
+    suspend fun requestToken(login: String, password: String): String? {
+
+        val response = webRepo.retrofit.auth(AuthRequest(login, password))
+        Log.d("MyLog", "$response")
+
+        tokenM = response.body()?.detail?.access.toString()
+        Log.d("MyLog", tokenM)
+
+        return if (response.isSuccessful && response.body()?.status_id == 200) {
+            response.body()?.detail?.access
+        } else {
+            response.body()?.error_message
+        }
+    }
+
+    fun requestPartners() {
+
         viewModelScope.launch {
-            val response = webRepo.retrofit.auth(authRequest)
-            Log.d("MyLog", "$response")
+            val result = webRepo.retrofit.getPartners("JWT $tokenM")
+            Log.d("MyLog", "$result")
+            _partners.value = result.detail.partners
 
-            val token = response.body()?.detail?.access
-            Log.d("MyLog", "$token")
-
-
-            tokenM = token.toString()
-//
-//            val status = response.body()?.status
-//            Log.d("MyLog", "$status")
-//
-//            statusM = status.toString()
-//
-//            val errorMessage = response.body()?.error_message
-//            errorMess = errorMessage.toString()
-//            Log.d("MyLog", "$errorMess")
+            Log.d("MyLog", _partners.value.toString())
 
 
         }
     }
-
-//     fun requestPartners() {
-//
-//        viewModelScope.launch {
-//            val result = webRepo.retrofit.getPartners("JWT"+tokenM)
-//            Log.d("MyLog", "$result")
-//            _partners.value = result.detail.partners
-//
-//
-//        }
-//    }
 
 }

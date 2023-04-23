@@ -1,4 +1,4 @@
-package com.example.partnersapp.model
+package com.example.partnersapp.model.authModels
 
 data class Detail(
     val access: String,
