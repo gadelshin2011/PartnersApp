@@ -45,7 +45,7 @@ open class AuthViewModel : ViewModel() {
         return if (response.isSuccessful && response.body()?.status_id == 200) {
             response.body()?.detail?.access
         } else {
-            response.body()?.error_message
+            null
         }
     }
 

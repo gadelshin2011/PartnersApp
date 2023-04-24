@@ -1,5 +1,6 @@
 package com.example.partnersapp.view.screen.authorization
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,7 +14,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentAuthorizationBinding
-import com.example.partnersapp.presenter.network.WebRepository
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -22,12 +22,10 @@ import kotlinx.coroutines.launch
 
 class Authorization : Fragment() {
     lateinit var binding: FragmentAuthorizationBinding
-    var webRepo = WebRepository()
     private val viewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentAuthorizationBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
@@ -79,25 +77,35 @@ class Authorization : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     private fun init() {
 
+
         binding.btnAuthorization.setOnClickListener {
+            onFocusKeyboard()
+            binding.btnAuthorization.isEnabled = false
             val login = binding.edLogin.text.toString()
             val password = binding.edPassword.text.toString()
 
             GlobalScope.launch {
                 val token = viewModel.requestToken(login, password)
-
                 Log.d("MyLog", "token = $token")
 
                 GlobalScope.launch(Dispatchers.Main) {
                     if (token != null) {
                         findNavController().navigate(R.id.action_authorization_to_partnersScreen)
                     } else {
-                        Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Ошибка авторизации", Toast.LENGTH_SHORT).show()
+                        binding.edLogin.setText("")
+                        binding.edPassword.setText("")
                     }
                 }
             }
         }
     }
+
+    private fun onFocusKeyboard() {
+       binding.edPassword.clearFocus()
+        binding.edLogin.clearFocus()
+    }
+
 }
 
 

@@ -1,9 +1,12 @@
 package com.example.partnersapp.presenter.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.partnersapp.R
 import com.example.partnersapp.databinding.RcItemBinding
 import com.example.partnersapp.model.partnerModels.Partner
 import com.squareup.picasso.Picasso
@@ -25,7 +28,7 @@ class RcAdapterPartners : RecyclerView.Adapter<RcAdapterPartners.MyHolder>() {
         }
 
         private fun setColor(color: String) {
-//            binding.cvPartner.cardBackgroundColor.defaultColor
+            binding.cvPartner.setCardBackgroundColor(Color.parseColor(color))
         }
 
         private fun setLogo(partnerLogoUrl: String) {
