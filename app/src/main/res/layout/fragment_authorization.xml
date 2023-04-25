@@ -14,6 +14,7 @@
         android:layout_width="85dp"
         android:layout_height="67dp"
         android:layout_marginBottom="100dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="Button"
+        android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -35,7 +36,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="40dp"
         android:padding="16dp"
-        android:text="Привет, Друг"
+        android:text="@string/welcome_text_auth"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="17sp"
@@ -58,43 +59,67 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
 
-        <EditText
-            android:id="@+id/edLogin"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="#EFF0F0"
-            android:backgroundTint="#EFF0F0"
-            android:hint="Лицевой счет"
-            android:textColorHighlight="@color/black"
-            android:inputType="textPersonName"
-            android:padding="12dp"
-            android:shadowRadius="8"
-            android:textColor="@color/black" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/edPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="#EFF0F0"
-            android:backgroundTint="#EFF0F0"
-            android:textColorHighlight="@color/black"
-            android:hint="Пароль"
-            android:inputType="textPassword"
-            android:padding="12dp"
+            <EditText
+                android:id="@+id/edLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/firstStateColor"
+                android:backgroundTint="@color/firstStateColor"
+                android:hint="@string/login_auth"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:shadowRadius="8"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            android:shadowRadius="8"
-            android:textColor="@color/black" />
+            <EditText
+                android:id="@+id/edPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/firstStateColor"
+                android:backgroundTint="@color/firstStateColor"
+                android:hint="@string/password_auth"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:shadowRadius="8"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edLogin" />
 
-        <TextView
-            android:id="@+id/tvError"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="12dp"
-            android:textColor="@color/red" />
+            <ImageButton
+                android:id="@+id/imageButtonPassVisible"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@color/firstStateColor"
+                android:src="@drawable/state_selector_image_button"
+                app:layout_constraintBottom_toBottomOf="@+id/edPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edPassword" />
+
+            <TextView
+                android:id="@+id/tvError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingStart="12dp"
+                android:textColor="@color/red"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edPassword" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/btnAuthorization"
@@ -105,7 +130,7 @@
             android:backgroundTint="@color/orangeUfanet"
             android:background="@drawable/element_style"
             android:padding="16dp"
-            android:text="Далее"
+            android:text="@string/btn_text_auth"
             android:enabled="false"
             android:textAlignment="center"
             android:textSize="17sp"
@@ -117,8 +142,8 @@
             android:id="@+id/tvUserAgr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Нажимая «Далее» Вы соглашаетесь с условиями
-пользовательского соглашения"
+            android:text="@string/users_agreement"
+            android:autoLink="web"
             android:textAlignment="center" />
     </LinearLayout>
 

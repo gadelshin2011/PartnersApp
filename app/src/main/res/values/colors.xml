@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orangeUfanet">#FF7733</color>
     <color name="red">#EE505A</color>
+    <color name="error_edit_text">#E4AEA9</color>
+    <color name="firstStateColor">#EFF0F0</color>
 
 </resources>
