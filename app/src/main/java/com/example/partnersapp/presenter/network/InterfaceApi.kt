@@ -7,6 +7,19 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface InterfaceApi {
+    //TODO чтобы не добавлять для каждого запроса одинаковые данные, используют Interceptors
+    //https://stackoverflow.com/questions/32196424/how-to-add-headers-to-okhttp-request-interceptor
+    // Один из ответов по ссылочке выше
+//    fun okHttpClientFactory(): OkHttpClient {
+//        return OkHttpClient().newBuilder()
+//            .addInterceptor { chain ->
+//                chain.request().newBuilder()
+//                    .addHeader(HEADER_AUTHONRIZATION, O_AUTH_AUTHENTICATION)
+//                    .build()
+//                    .let(chain::proceed)
+//            }
+//            .build()
+//    }
     @Headers(
         "withAuth: false",
         "AppKey:sCNXJoLWDSchbDRouriS"

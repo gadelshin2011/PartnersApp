@@ -2,6 +2,7 @@
     <string name="app_name">PartnersApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+<!--    TODO Для строковых ресурсов используют snake case (any_string_name_res)-->
     <string name="ErrorText">Неверный логин или пароль</string>
     <string name="ErrorAuthorization">Ошибка авторизации</string>
     <string name="TextLogin">72855249</string>

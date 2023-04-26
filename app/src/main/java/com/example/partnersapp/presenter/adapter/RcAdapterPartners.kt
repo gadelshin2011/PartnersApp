@@ -11,8 +11,12 @@ import com.example.partnersapp.databinding.RcItemBinding
 import com.example.partnersapp.model.partnerModels.Partner
 import com.squareup.picasso.Picasso
 
+//TODO Название пакета не соответствует его работе/назвачение/типу. Presenter - обычно воспринимается как часть из паттерна MVP (ИМХО)
+// Лучше не сокращать слово presentation (если ты это сделал)
 class RcAdapterPartners : RecyclerView.Adapter<RcAdapterPartners.MyHolder>() {
+    // TODO префикс "Rc" можно опускать, не особо встречал такой стиль, да и как-то без него понятно (ИМХО)
 
+    //TODO Используется только внутри этого класса - нужно сделать private
     var listItem: MutableList<Partner> = mutableListOf()
 
     class MyHolder(private val binding: RcItemBinding) : RecyclerView.ViewHolder(binding.root) {

@@ -22,8 +22,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import android.content.Intent
 import android.net.Uri
+import androidx.core.widget.doAfterTextChanged
 
-
+//TODO Лучше придерживаться единого нейминга (где-то у тебя используется NameScreen, а тут просто Name)
 class Authorization : Fragment() {
     lateinit var binding: FragmentAuthorizationBinding
     private val viewModel: AuthViewModel by activityViewModels()
@@ -47,6 +48,8 @@ class Authorization : Fragment() {
     }
 
     private fun isEnableBtn() {
+    //TODO Есть экстеншен для отлеживания только одного типа изменения текста (если другие не нужны )
+    // binding.edPassword.doAfterTextChanged
         binding.edPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 binding.tvError.text = ""
@@ -113,6 +116,8 @@ class Authorization : Fragment() {
             val password = binding.edPassword.text.toString()
 
             if (checkingData(login, password)) {
+                //TODO GlobalScope лучше не использовать так как время жизни ограничено только временем жизни всего приложения.
+                // Получается фрагмент может быть уже уничтожен и создастся новый, а код будет продолжать выполняться
                 GlobalScope.launch {
                     val token = viewModel.requestToken(login, password)
                     //Log.d("MyLog", "token = $token")

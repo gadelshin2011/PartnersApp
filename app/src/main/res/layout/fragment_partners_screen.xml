@@ -44,7 +44,8 @@
 
     </LinearLayout>
 
-
+<!--TODO GridLayoutManager необходимо использовать? если нужно только 1 элеент размещать по горизонтали, -->
+<!--    то для этого будет достаточно LinearLayoutManager-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcViewPartners"
         android:layout_width="match_parent"

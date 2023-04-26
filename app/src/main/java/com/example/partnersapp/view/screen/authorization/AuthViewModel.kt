@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+// TODO открытым класс совершенно не нужно делать, если ты от него нигде не наследуешься
 open class AuthViewModel : ViewModel() {
 
     private val webRepo = WebRepository()
