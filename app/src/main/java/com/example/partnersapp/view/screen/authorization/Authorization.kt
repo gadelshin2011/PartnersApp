@@ -39,7 +39,6 @@ class Authorization : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.progressBar.visibility = View.GONE
         clearDataFromEdText()
         init()
         setListener()
@@ -68,29 +67,33 @@ class Authorization : Fragment() {
     }
 
     private fun setListener() {
+        binding.imageButtonPassVisible.setOnClickListener {
+            binding.imageButtonPassVisible.isSelected =
+                !binding.imageButtonPassVisible.isSelected
+
+            if (!binding.imageButtonPassVisible.isSelected) {
+                binding.edPassword.transformationMethod =
+                    PasswordTransformationMethod.getInstance();
+            } else {
+                binding.edPassword.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance();
+            }
+        }
         binding.buttonLogPass.setOnClickListener {
+
+
             binding.apply {
                 edLogin.setText(getString(R.string.TextLogin)).toString()
                 edPassword.setText(getString(R.string.TestPassword)).toString()
             }
+        }
 
-            binding.imageButtonPassVisible.setOnClickListener {
-                binding.imageButtonPassVisible.isSelected =
-                    !binding.imageButtonPassVisible.isSelected
-
-                if (!binding.imageButtonPassVisible.isSelected) {
-                    binding.edPassword.transformationMethod =
-                        PasswordTransformationMethod.getInstance();
-                } else {
-                    binding.edPassword.transformationMethod =
-                        HideReturnsTransformationMethod.getInstance();
-                }
-            }
-
-            binding.tvUserAgr.setOnClickListener {
-                val browser = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.ufanet.ru/media/uploads/2021/11/30/Dizi.pdf"))
-                startActivity(browser)
-            }
+        binding.tvUserAgr.setOnClickListener {
+            val browser = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.ufanet.ru/media/uploads/2021/11/30/Dizi.pdf")
+            )
+            startActivity(browser)
         }
 
     }
@@ -101,8 +104,10 @@ class Authorization : Fragment() {
         binding.btnAuthorization.setOnClickListener {
 
             onCloseKeyboard()
-
+            binding.progressBar.visibility = View.VISIBLE
             binding.btnAuthorization.isEnabled = false
+            binding.edLogin.isEnabled = false
+            binding.edPassword.isEnabled = false
 
             val login = binding.edLogin.text.toString()
             val password = binding.edPassword.text.toString()
@@ -114,20 +119,14 @@ class Authorization : Fragment() {
 
                     GlobalScope.launch(Dispatchers.Main) {
                         if (token != null) {
+                            binding.progressBar.visibility = View.GONE
                             findNavController().navigate(R.id.action_authorization_to_partnersScreen)
                         } else {
-                            Toast.makeText(
-                                context,
-                                getString(R.string.ErrorAuthorization),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            clearDataFromEdText()
+                            actionWithElement()
                         }
                     }
                 }
             }
-
-
         }
     }
 
@@ -136,25 +135,36 @@ class Authorization : Fragment() {
             activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(binding.edPassword.windowToken, 0)
         inputMethodManager.hideSoftInputFromWindow(binding.edLogin.windowToken, 0)
-
         binding.edLogin.clearFocus()
         binding.edPassword.clearFocus()
     }
 
     private fun checkingData(login: String, password: String): Boolean {
         return if (login.length < 8 || password.length < 8) {
-            binding.tvError.text = getString(R.string.ErrorText)
-
+            actionWithElement()
             false
         } else {
             true
         }
-
     }
 
     private fun clearDataFromEdText() {
         binding.edLogin.setText("")
         binding.edPassword.setText("")
+    }
+
+    private fun actionWithElement() {
+        binding.tvError.text = getString(R.string.ErrorText)
+        binding.edLogin.isEnabled = true
+        binding.edPassword.isEnabled = true
+        binding.btnAuthorization.isEnabled = true
+        binding.progressBar.visibility = View.GONE
+
+//        Toast.makeText(
+//            context,
+//            getString(R.string.ErrorAuthorization),
+//            Toast.LENGTH_SHORT
+//        ).show()
     }
 
 }
