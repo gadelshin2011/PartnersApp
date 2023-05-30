@@ -11,17 +11,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-open class AuthViewModel : ViewModel() {
+class AuthViewModel : ViewModel() {
 
     private val webRepo = WebRepository()
     var tokenM: String = ""
 
-
-//    private val _authDataM: MutableStateFlow<List<AuthData>> = MutableStateFlow(
-//        emptyList()
-//
-//    )
-//    val authorizationM = _authDataM.asStateFlow()
 
     private val _partners: MutableStateFlow<List<Partner>> = MutableStateFlow(
         emptyList()
@@ -30,17 +24,17 @@ open class AuthViewModel : ViewModel() {
     val partners = _partners.asStateFlow()
 
     init {
-        //requestPartners()
+
     }
 
 
     suspend fun requestToken(login: String, password: String): String? {
 
         val response = webRepo.retrofit.auth(AuthRequest(login, password))
-        Log.d("MyLog", "$response")
+        //Log.d("MyLog", "$response")
 
         tokenM = response.body()?.detail?.access.toString()
-        Log.d("MyLog", tokenM)
+       // Log.d("MyLog", tokenM)
 
         return if (response.isSuccessful && response.body()?.status_id == 200) {
             response.body()?.detail?.access
@@ -56,7 +50,7 @@ open class AuthViewModel : ViewModel() {
             Log.d("MyLog", "$result")
             _partners.value = result.detail.partners
 
-            Log.d("MyLog", _partners.value.toString())
+          //  Log.d("MyLog", _partners.value.toString())
 
 
         }

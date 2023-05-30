@@ -104,7 +104,7 @@ class Authorization : Fragment() {
         binding.btnAuthorization.setOnClickListener {
 
             onCloseKeyboard()
-            binding.progressBar.visibility = View.VISIBLE
+            binding.progressCard.visibility = View.VISIBLE
             binding.btnAuthorization.isEnabled = false
             binding.edLogin.isEnabled = false
             binding.edPassword.isEnabled = false
@@ -119,7 +119,7 @@ class Authorization : Fragment() {
 
                     GlobalScope.launch(Dispatchers.Main) {
                         if (token != null) {
-                            binding.progressBar.visibility = View.GONE
+                            binding.progressCard.visibility = View.GONE
                             findNavController().navigate(R.id.action_authorization_to_partnersScreen)
                         } else {
                             actionWithElement()
@@ -158,7 +158,7 @@ class Authorization : Fragment() {
         binding.edLogin.isEnabled = true
         binding.edPassword.isEnabled = true
         binding.btnAuthorization.isEnabled = true
-        binding.progressBar.visibility = View.GONE
+        binding.progressCard.visibility = View.GONE
 
 //        Toast.makeText(
 //            context,

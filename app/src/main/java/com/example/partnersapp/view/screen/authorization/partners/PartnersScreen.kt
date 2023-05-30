@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.onEach
 class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
     private lateinit var recyclerView: RecyclerView
-    var webRepo = WebRepository()
     private val adapterRc = RcAdapterPartners()
     private val viewModel: AuthViewModel by activityViewModels()
 
@@ -39,7 +38,8 @@ class PartnersScreen : Fragment() {
     }
 
     private fun init() {
-        initialization()
+        recyclerView = binding.rcViewPartners
+        recyclerView.adapter = adapterRc
         showData()
         setListener()
     }
@@ -56,11 +56,4 @@ class PartnersScreen : Fragment() {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
         viewModel.requestPartners()
     }
-
-    private fun initialization() {
-        recyclerView = binding.rcViewPartners
-        recyclerView.adapter = adapterRc
-    }
-
-
 }
