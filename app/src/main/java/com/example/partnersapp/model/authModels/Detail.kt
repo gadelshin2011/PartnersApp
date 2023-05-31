@@ -1,7 +1,11 @@
 package com.example.partnersapp.model.authModels
 
+import com.google.gson.annotations.SerializedName
+
 data class Detail(
-    val access: String,
+    @SerializedName("access")
+    val accessToken: String,
     val expires_in: Double,
-    val refresh: String
+    @SerializedName("refresh")
+    val refreshToken: String
 )

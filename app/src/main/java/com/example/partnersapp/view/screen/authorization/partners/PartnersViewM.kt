@@ -1,10 +1,10 @@
 package com.example.partnersapp.view.screen.authorization.partners
 
 import androidx.lifecycle.ViewModel
-import com.example.partnersapp.presenter.network.WebRepository
+import com.example.partnersapp.presentation.network.RetrofitClient
 
 class PartnersViewM : ViewModel() {
-    private val webRepo = WebRepository()
+    private val webRepo = RetrofitClient()
     private var token: String = ""
 
 

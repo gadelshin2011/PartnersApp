@@ -11,8 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
-import com.example.partnersapp.presenter.adapter.RcAdapterPartners
-import com.example.partnersapp.presenter.network.WebRepository
+import com.example.partnersapp.presentation.adapter.AdapterPartners
 import com.example.partnersapp.view.screen.authorization.AuthViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -20,7 +19,7 @@ import kotlinx.coroutines.flow.onEach
 class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
     private lateinit var recyclerView: RecyclerView
-    private val adapterRc = RcAdapterPartners()
+    private val adapterRc = AdapterPartners()
     private val viewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(

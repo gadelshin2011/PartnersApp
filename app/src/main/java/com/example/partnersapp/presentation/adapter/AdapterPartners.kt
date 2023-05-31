@@ -1,28 +1,26 @@
-package com.example.partnersapp.presenter.adapter
+package com.example.partnersapp.presentation.adapter
 
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.partnersapp.R
 import com.example.partnersapp.databinding.RcItemBinding
 import com.example.partnersapp.model.partnerModels.Partner
 import com.squareup.picasso.Picasso
 
-class RcAdapterPartners : RecyclerView.Adapter<RcAdapterPartners.MyHolder>() {
+class AdapterPartners : RecyclerView.Adapter<AdapterPartners.MyHolder>() {
 
-    var listItem: MutableList<Partner> = mutableListOf()
+   private var listItem: MutableList<Partner> = mutableListOf()
 
     class MyHolder(private val binding: RcItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(part: Partner) {
-            setName(part.name)
+            setName(part.partnerName)
             setSphereName(part.sphere_name)
             setDiscount(part.text_discount)
             setPromotionDescription(part.promotion_description)
-            setImage(part.partner_image_url)
-            setLogo(part.partner_logo_url)
+            setImage(part.partner_image)
+            setLogo(part.partner_logo)
             setColor(part.color)
 
         }

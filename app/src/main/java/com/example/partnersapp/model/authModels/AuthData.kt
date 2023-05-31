@@ -1,8 +1,12 @@
 package com.example.partnersapp.model.authModels
 
+import com.google.gson.annotations.SerializedName
+
 data class AuthData(
     val detail: Detail,
-    val error_message: String,
+    @SerializedName("error_message")
+    val errorMessage: String,
     val status: String,
-    val status_id: Int
+    @SerializedName("status_id")
+    val statusId: Int
 )
