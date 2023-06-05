@@ -7,9 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="orangeUfanet">#FF7733</color>
+    <color name="orange_ufanet">#FF7733</color>
     <color name="red">#EE505A</color>
     <color name="error_edit_text">#E4AEA9</color>
-    <color name="firstStateColor">#EFF0F0</color>
+    <color name="first_state_color">#EFF0F0</color>
 
 </resources>

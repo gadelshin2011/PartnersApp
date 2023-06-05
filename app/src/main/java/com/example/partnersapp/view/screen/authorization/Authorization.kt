@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -79,12 +78,12 @@ class Authorization : Fragment() {
                     HideReturnsTransformationMethod.getInstance();
             }
         }
-        binding.buttonLogPass.setOnClickListener {
+        binding.greetingField.setOnClickListener {
 
 
             binding.apply {
-                edLogin.setText(getString(R.string.TextLogin)).toString()
-                edPassword.setText(getString(R.string.TestPassword)).toString()
+                edLogin.setText(getString(R.string.text_login)).toString()
+                edPassword.setText(getString(R.string.test_password)).toString()
             }
         }
 
@@ -154,7 +153,7 @@ class Authorization : Fragment() {
     }
 
     private fun actionWithElement() {
-        binding.tvError.text = getString(R.string.ErrorText)
+        binding.tvError.text = getString(R.string.error_text)
         binding.edLogin.isEnabled = true
         binding.edPassword.isEnabled = true
         binding.btnAuthorization.isEnabled = true

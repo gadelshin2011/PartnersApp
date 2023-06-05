@@ -3,7 +3,7 @@
     <item>
         <shape>
             <corners android:radius="20dp" />
-            <solid android:color="@color/orangeUfanet"/>
+            <solid android:color="@color/orange_ufanet"/>
             <padding android:top="16dp"/>
             <padding android:bottom="16dp"/>
             <padding android:start="16dp"/>
