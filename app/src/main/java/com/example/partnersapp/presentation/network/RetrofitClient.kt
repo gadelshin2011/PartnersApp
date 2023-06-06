@@ -27,7 +27,7 @@ class RetrofitClient {
                 BASE_URL
             ).build().create(InterfaceApi::class.java)
 
-    companion object {
+  private companion object {
         const val BASE_URL = "https://api.ufanet.ru"
     }
 
