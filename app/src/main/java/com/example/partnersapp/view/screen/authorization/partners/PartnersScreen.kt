@@ -6,21 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
 import com.example.partnersapp.presentation.adapter.AdapterPartners
-import com.example.partnersapp.view.screen.authorization.AuthViewModel
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
-    private lateinit var recyclerView: RecyclerView
     private val adapterRc = AdapterPartners()
-    private val viewModel: AuthViewModel by activityViewModels()
+    private val viewModel: PartnersViewM by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +36,7 @@ class PartnersScreen : Fragment() {
     }
 
     private fun init() {
-        recyclerView = binding.rcViewPartners
-        recyclerView.adapter = adapterRc
+        binding.rcViewPartners.adapter = adapterRc
         showData()
         setListener()
     }
@@ -50,9 +48,13 @@ class PartnersScreen : Fragment() {
     }
 
     private fun showData() {
-        viewModel.partners.onEach {
-            adapterRc.setList(it)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.partners.collect {
+                    adapterRc.setList(it)
+                }
+            }
+        }
         viewModel.requestPartners()
     }
 }

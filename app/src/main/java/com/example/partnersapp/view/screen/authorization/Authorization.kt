@@ -1,26 +1,26 @@
 package com.example.partnersapp.view.screen.authorization
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentAuthorizationBinding
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import android.content.Intent
-import android.net.Uri
 
 
 class Authorization : Fragment() {
@@ -32,7 +32,6 @@ class Authorization : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentAuthorizationBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
         return binding.root
     }
 
@@ -42,27 +41,17 @@ class Authorization : Fragment() {
         init()
         setListener()
         isEnableBtn()
-
     }
 
     private fun isEnableBtn() {
-        binding.edPassword.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                binding.tvError.text = ""
-                binding.btnAuthorization.isEnabled = s?.length!! > 5
-            }
+        binding.edPassword.doOnTextChanged { text, _, _, _ ->
+            binding.tvError.text = ""
+            binding.btnAuthorization.isEnabled = text?.length!! > 5
+        }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-        binding.edLogin.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                binding.tvError.text = ""
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
+        binding.edLogin.doOnTextChanged { _, _, _, _ ->
+            binding.tvError.text = ""
+        }
     }
 
     private fun setListener() {
@@ -78,8 +67,8 @@ class Authorization : Fragment() {
                     HideReturnsTransformationMethod.getInstance();
             }
         }
-        binding.greetingField.setOnClickListener {
 
+        binding.greetingField.setOnClickListener {
 
             binding.apply {
                 edLogin.setText(getString(R.string.text_login)).toString()
@@ -94,14 +83,11 @@ class Authorization : Fragment() {
             )
             startActivity(browser)
         }
-
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun init() {
 
         binding.btnAuthorization.setOnClickListener {
-
             onCloseKeyboard()
             binding.progressCard.visibility = View.VISIBLE
             binding.btnAuthorization.isEnabled = false
@@ -112,16 +98,17 @@ class Authorization : Fragment() {
             val password = binding.edPassword.text.toString()
 
             if (checkingData(login, password)) {
-                GlobalScope.launch {
-                    val token = viewModel.requestToken(login, password)
-                    //Log.d("MyLog", "token = $token")
+                lifecycleScope.launch(Dispatchers.IO) {
+                    repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        val token = viewModel.requestToken(login, password)
 
-                    GlobalScope.launch(Dispatchers.Main) {
-                        if (token != null) {
-                            binding.progressCard.visibility = View.GONE
-                            findNavController().navigate(R.id.action_authorization_to_partnersScreen)
-                        } else {
-                            actionWithElement()
+                        lifecycleScope.launch {
+                            if (token != null) {
+                                binding.progressCard.visibility = View.GONE
+                                findNavController().navigate(R.id.action_authorization_to_partnersScreen)
+                            } else {
+                                actionWithElement()
+                            }
                         }
                     }
                 }
@@ -159,11 +146,6 @@ class Authorization : Fragment() {
         binding.btnAuthorization.isEnabled = true
         binding.progressCard.visibility = View.GONE
 
-//        Toast.makeText(
-//            context,
-//            getString(R.string.ErrorAuthorization),
-//            Toast.LENGTH_SHORT
-//        ).show()
     }
 
 }
