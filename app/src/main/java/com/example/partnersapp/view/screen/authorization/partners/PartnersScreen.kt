@@ -10,15 +10,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
 import com.example.partnersapp.presentation.adapter.AdapterPartners
+import com.example.partnersapp.presentation.adapter.AdapterPartnersCategory
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
     private val adapterRc = AdapterPartners()
+    private val adapterCategory = AdapterPartnersCategory()
     private val viewModel: PartnersViewM by activityViewModels()
 
     override fun onCreateView(
@@ -36,6 +39,8 @@ class PartnersScreen : Fragment() {
     }
 
     private fun init() {
+        binding.rcViewPartnersCategory.adapter = adapterCategory
+        binding.rcViewPartnersCategory.layoutManager = GridLayoutManager(context,2)
         binding.rcViewPartners.adapter = adapterRc
         showData()
         setListener()
@@ -52,6 +57,8 @@ class PartnersScreen : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.partners.collect {
                     adapterRc.setList(it)
+                    //adapterCategory.setList(it)
+
                 }
             }
         }

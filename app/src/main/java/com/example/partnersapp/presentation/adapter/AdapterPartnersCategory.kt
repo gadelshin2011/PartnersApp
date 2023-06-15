@@ -9,7 +9,7 @@ import com.example.partnersapp.databinding.RcItemBinding
 import com.example.partnersapp.model.partnerModels.allPartners.Partner
 import com.squareup.picasso.Picasso
 
-class AdapterPartners : RecyclerView.Adapter<AdapterPartners.MyHolder>() {
+class AdapterPartnersCategory : RecyclerView.Adapter<AdapterPartnersCategory.MyHolder>() {
 
    private var listItem: MutableList<Partner> = mutableListOf()
 

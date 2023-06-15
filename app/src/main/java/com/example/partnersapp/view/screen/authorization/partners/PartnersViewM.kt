@@ -1,10 +1,9 @@
 package com.example.partnersapp.view.screen.authorization.partners
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.partnersapp.model.partnerModels.Partner
+import com.example.partnersapp.model.partnerModels.allPartners.Partner
 import com.example.partnersapp.presentation.db.DataStoreManager
 import com.example.partnersapp.presentation.network.RetrofitClient
 import kotlinx.coroutines.flow.MutableStateFlow

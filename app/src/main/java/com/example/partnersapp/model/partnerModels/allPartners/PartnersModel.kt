@@ -1,4 +1,4 @@
-package com.example.partnersapp.model.partnerModels
+package com.example.partnersapp.model.partnerModels.allPartners
 
 import com.google.gson.annotations.SerializedName
 
