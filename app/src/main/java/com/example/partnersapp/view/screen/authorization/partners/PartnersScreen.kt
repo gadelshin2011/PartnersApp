@@ -15,6 +15,7 @@ import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
 import com.example.partnersapp.presentation.adapter.AdapterPartners
 import com.example.partnersapp.presentation.adapter.AdapterPartnersCategory
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
@@ -40,6 +41,7 @@ class PartnersScreen : Fragment() {
 
     private fun init() {
         binding.rcViewPartnersCategory.adapter = adapterCategory
+     //   binding.rcViewPartnersCategory.scr
         binding.rcViewPartnersCategory.layoutManager = GridLayoutManager(context,2)
         binding.rcViewPartners.adapter = adapterRc
         showData()
@@ -57,11 +59,19 @@ class PartnersScreen : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.partners.collect {
                     adapterRc.setList(it)
-                    //adapterCategory.setList(it)
-
                 }
             }
         }
         viewModel.requestPartners()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.partnersCategory.collect {
+                    adapterCategory.setListCategory(it)
+                }
+            }
+        }
+        viewModel.requestPartnerCategory()
+
     }
 }

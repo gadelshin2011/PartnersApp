@@ -5,76 +5,83 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.partnersapp.R
 import com.example.partnersapp.databinding.RcItemBinding
+import com.example.partnersapp.databinding.RcItemCategoryBinding
 import com.example.partnersapp.model.partnerModels.allPartners.Partner
+import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
 import com.squareup.picasso.Picasso
 
 class AdapterPartnersCategory : RecyclerView.Adapter<AdapterPartnersCategory.MyHolder>() {
 
-   private var listItem: MutableList<Partner> = mutableListOf()
+    private var listItemCategory: MutableList<PartnerCategoryDetail> = mutableListOf()
 
-    class MyHolder(private val binding: RcItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(part: Partner) {
-            setName(part.partnerName)
-            setSphereName(part.sphere_name)
-            setDiscount(part.text_discount)
-            setPromotionDescription(part.promotion_description)
-            setImage(part.partner_image)
-            setLogo(part.partner_logo)
-            setColor(part.color)
+    class MyHolder(private val binding: RcItemCategoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(partCat: PartnerCategoryDetail) {
+            setColor(partCat.color)
+            setImage(partCat.imageUrl)
+//            setImageColor(partCat.imageColor)
+            setCountPartners(partCat.countPartners)
+            setNameCategory(partCat.title)
 
+        }
+
+//        private fun setImageColor(imageColor: String) {
+//            if (imageColor!= "" ){
+//                binding.categoryImage.setBackgroundColor(Color.parseColor(imageColor))
+//            } else{
+//                val imageColorW = R.color.white.toString()
+//                binding.categoryImage.setBackgroundColor(Color.parseColor(imageColorW))
+//            }
+//
+//        }
+
+        private fun setNameCategory(name: String) {
+            binding.categoryName.text = name
+        }
+
+        @SuppressLint("SetTextI18n")
+        private fun setCountPartners(countPartners: Int) {
+            if (countPartners <= 1) {
+                binding.countPartners.text = "$countPartners предложение"
+            }
+            if (countPartners in 2..4) {
+                binding.countPartners.text = "$countPartners предложения"
+            }
+            if (countPartners >= 5) {
+                binding.countPartners.text = "$countPartners предложений"
+            }
         }
 
         private fun setColor(color: String) {
             binding.cvPartner.setCardBackgroundColor(Color.parseColor(color))
         }
 
-        private fun setLogo(partnerLogoUrl: String) {
-            Picasso.get().load(partnerLogoUrl).into(binding.ivLogoPartner)
-        }
-
         private fun setImage(partnerImageUrl: String) {
-            Picasso.get().load(partnerImageUrl).into(binding.partnerImage)
+            Picasso.get().load(partnerImageUrl).into(binding.categoryImage)
         }
-
-        private fun setPromotionDescription(promotionDescription: String) {
-            binding.promotionDescription.text = promotionDescription
-        }
-
-        private fun setDiscount(textDiscount: String) {
-            binding.textDiscount.text = textDiscount
-        }
-
-        private fun setSphereName(sphereName: String) {
-            binding.sphereName.text = sphereName
-        }
-
-        private fun setName(name: String) {
-            binding.partnerName.text = name
-        }
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         return MyHolder(
-            RcItemBinding.inflate(
+            RcItemCategoryBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        holder.bind(listItem[position])
+        holder.bind(listItemCategory[position])
     }
 
     override fun getItemCount(): Int {
-        return listItem.size
+        return listItemCategory.size
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: List<Partner>) {
-        listItem.addAll(list)
+    fun setListCategory(list: List<PartnerCategoryDetail>) {
+        listItemCategory.addAll(list)
         notifyDataSetChanged()
     }
 }
