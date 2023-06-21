@@ -18,7 +18,7 @@ interface InterfaceApi {
     @GET("/api/v0/partner/category/?city=1")
     suspend fun getPartnerCategory(@Header("Authorization") tokenM:String) : PartnerCategory
 
-
+    //@GET("http://partner.ufanet.ru/api/v0/new_partner/{city_id}/")
 
 
 

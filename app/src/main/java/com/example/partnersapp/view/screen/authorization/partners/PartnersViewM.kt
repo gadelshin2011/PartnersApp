@@ -27,7 +27,7 @@ class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
     val partnersCategory = _partnersCategory.asStateFlow()
 
 
-    init {}
+    init { }
 
     fun requestPartners() {
         viewModelScope.launch {

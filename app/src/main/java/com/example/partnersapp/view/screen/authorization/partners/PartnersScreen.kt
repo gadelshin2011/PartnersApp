@@ -57,6 +57,15 @@ class PartnersScreen : Fragment() {
     private fun showData() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.partnersCategory.collect {
+                    adapterCategory.setListCategory(it)
+                }
+            }
+        }
+        viewModel.requestPartnerCategory()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.partners.collect {
                     adapterRc.setList(it)
                 }
@@ -64,14 +73,7 @@ class PartnersScreen : Fragment() {
         }
         viewModel.requestPartners()
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.partnersCategory.collect {
-                    adapterCategory.setListCategory(it)
-                }
-            }
-        }
-        viewModel.requestPartnerCategory()
+
 
     }
 }

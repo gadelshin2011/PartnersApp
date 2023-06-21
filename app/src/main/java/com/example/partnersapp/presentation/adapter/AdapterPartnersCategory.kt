@@ -5,14 +5,12 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.partnersapp.R
-import com.example.partnersapp.databinding.RcItemBinding
+import com.bumptech.glide.Glide
 import com.example.partnersapp.databinding.RcItemCategoryBinding
-import com.example.partnersapp.model.partnerModels.allPartners.Partner
 import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
 import com.squareup.picasso.Picasso
 
-class AdapterPartnersCategory : RecyclerView.Adapter<AdapterPartnersCategory.MyHolder>() {
+class AdapterPartnersCategory() : RecyclerView.Adapter<AdapterPartnersCategory.MyHolder>() {
 
     private var listItemCategory: MutableList<PartnerCategoryDetail> = mutableListOf()
 
@@ -20,22 +18,12 @@ class AdapterPartnersCategory : RecyclerView.Adapter<AdapterPartnersCategory.MyH
         RecyclerView.ViewHolder(binding.root) {
         fun bind(partCat: PartnerCategoryDetail) {
             setColor(partCat.color)
-            setImage(partCat.imageUrl)
-//            setImageColor(partCat.imageColor)
+            setImage(partCat.imageColor)
             setCountPartners(partCat.countPartners)
             setNameCategory(partCat.title)
 
         }
 
-//        private fun setImageColor(imageColor: String) {
-//            if (imageColor!= "" ){
-//                binding.categoryImage.setBackgroundColor(Color.parseColor(imageColor))
-//            } else{
-//                val imageColorW = R.color.white.toString()
-//                binding.categoryImage.setBackgroundColor(Color.parseColor(imageColorW))
-//            }
-//
-//        }
 
         private fun setNameCategory(name: String) {
             binding.categoryName.text = name
@@ -59,7 +47,10 @@ class AdapterPartnersCategory : RecyclerView.Adapter<AdapterPartnersCategory.MyH
         }
 
         private fun setImage(partnerImageUrl: String) {
-            Picasso.get().load(partnerImageUrl).into(binding.categoryImage)
+            //Picasso.get().load(partnerImageUrl).into(binding.categoryImage)
+            Glide.with(itemView.context).load(partnerImageUrl).into(binding.categoryImage)
+
+
         }
     }
 
