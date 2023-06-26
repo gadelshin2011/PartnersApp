@@ -10,11 +10,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
 import com.example.partnersapp.presentation.adapter.AdapterPartners
 import com.example.partnersapp.presentation.adapter.AdapterPartnersCategory
+import com.example.partnersapp.presentation.adapter.AdapterTextView
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -23,6 +25,7 @@ class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
     private val adapterRc = AdapterPartners()
     private val adapterCategory = AdapterPartnersCategory()
+    private val adapterTv = AdapterTextView()
     private val viewModel: PartnersViewM by activityViewModels()
 
     override fun onCreateView(
@@ -40,10 +43,26 @@ class PartnersScreen : Fragment() {
     }
 
     private fun init() {
-        binding.rcViewPartnersCategory.adapter = adapterCategory
-     //   binding.rcViewPartnersCategory.scr
-        binding.rcViewPartnersCategory.layoutManager = GridLayoutManager(context,2)
-        binding.rcViewPartners.adapter = adapterRc
+//        binding.rcViewPartnersCategory.adapter = adapterCategory
+//        binding.rcViewPartnersCategory.layoutManager = GridLayoutManager(context,2)
+//        binding.rcViewPartners.adapter = adapterRc
+        val concatAdapter = ConcatAdapter(adapterCategory,adapterTv,adapterRc)
+        binding.rcViewPartners.layoutManager = GridLayoutManager(context,2)
+        binding.rcViewPartners.adapter = concatAdapter
+
+        (binding.rcViewPartners.layoutManager as GridLayoutManager).spanSizeLookup = object:
+        GridLayoutManager.SpanSizeLookup(){
+            override fun getSpanSize(position: Int): Int {
+                return if(position < adapterCategory.itemCount) {
+                    1
+                } else {
+                    2
+                }
+            }
+        }
+
+
+
         showData()
         setListener()
     }
@@ -72,6 +91,12 @@ class PartnersScreen : Fragment() {
             }
         }
         viewModel.requestPartners()
+
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//               adapterTv.setListTV(listOf())
+//            }
+//        }
 
 
 

@@ -7,9 +7,11 @@ import com.example.partnersapp.model.partnerModels.allPartners.Partner
 import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
 import com.example.partnersapp.presentation.db.DataStoreManager
 import com.example.partnersapp.presentation.network.RetrofitClient
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 
 class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
 
@@ -30,7 +32,7 @@ class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
     init { }
 
     fun requestPartners() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val tokenM = dateS.loadToken()
             val result = webRepo.retrofit.getPartners("JWT $tokenM")
 //            Log.d("MyLog", "$tokenM")
@@ -38,7 +40,7 @@ class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
         }
     }
     fun requestPartnerCategory(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val tokenM = dateS.loadToken()
             val resultCategory = webRepo.retrofit.getPartnerCategory("JWT $tokenM")
             _partnersCategory.value = resultCategory.detail
