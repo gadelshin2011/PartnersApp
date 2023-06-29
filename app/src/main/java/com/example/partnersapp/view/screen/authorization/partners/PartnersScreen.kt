@@ -43,10 +43,9 @@ class PartnersScreen : Fragment() {
     }
 
     private fun init() {
-//        binding.rcViewPartnersCategory.adapter = adapterCategory
-//        binding.rcViewPartnersCategory.layoutManager = GridLayoutManager(context,2)
-//        binding.rcViewPartners.adapter = adapterRc
-        val concatAdapter = ConcatAdapter(adapterCategory,adapterTv,adapterRc)
+
+
+        val concatAdapter = ConcatAdapter(adapterCategory,adapterRc)
         binding.rcViewPartners.layoutManager = GridLayoutManager(context,2)
         binding.rcViewPartners.adapter = concatAdapter
 
@@ -61,10 +60,9 @@ class PartnersScreen : Fragment() {
             }
         }
 
-
-
         showData()
         setListener()
+
     }
 
     private fun setListener() {
@@ -92,11 +90,6 @@ class PartnersScreen : Fragment() {
         }
         viewModel.requestPartners()
 
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//               adapterTv.setListTV(listOf())
-//            }
-//        }
 
 
 
