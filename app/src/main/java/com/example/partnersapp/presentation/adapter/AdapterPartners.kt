@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.partnersapp.databinding.RcItemBinding
-import com.example.partnersapp.model.partnerModels.Partner
+import com.example.partnersapp.model.partnerModels.allPartners.Partner
 import com.squareup.picasso.Picasso
 
 class AdapterPartners : RecyclerView.Adapter<AdapterPartners.MyHolder>() {
