@@ -1,5 +1,6 @@
 package com.example.partnersapp.presentation.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -39,9 +40,10 @@ class AdapterTextView:RecyclerView.Adapter<AdapterTextView.MyHolder>() {
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
        holder.bind(listItem[position])
     }
-//    @SuppressLint("NotifyDataSetChanged")
-//    fun setListTV(list: List<TextViewModel>) {
-//        listItem.addAll(list)
-//        notifyDataSetChanged()
-//    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setListTV(list: List<TextViewModel>) {
+        listItem.addAll(list)
+        notifyDataSetChanged()
+    }
 }
