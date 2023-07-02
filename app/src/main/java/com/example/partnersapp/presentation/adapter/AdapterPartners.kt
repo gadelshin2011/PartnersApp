@@ -77,4 +77,5 @@ class AdapterPartners : RecyclerView.Adapter<AdapterPartners.MyHolder>() {
         listItem.addAll(list)
         notifyDataSetChanged()
     }
+
 }

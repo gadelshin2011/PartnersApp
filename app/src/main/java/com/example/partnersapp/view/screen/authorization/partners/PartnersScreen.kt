@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
 import com.example.partnersapp.model.partnerModels.TextViewModel
@@ -45,7 +46,8 @@ class PartnersScreen : Fragment() {
     private fun init() {
 
 
-        val concatAdapter = ConcatAdapter(adapterCategoryPartners, adapterTextView, adapterAllPartners)
+        val concatAdapter =
+            ConcatAdapter(adapterCategoryPartners, adapterTextView, adapterAllPartners)
         binding.rcViewPartners.layoutManager = GridLayoutManager(context, 2)
         binding.rcViewPartners.adapter = concatAdapter
 
@@ -61,7 +63,9 @@ class PartnersScreen : Fragment() {
         }
 
         showData()
+        recyclerScrollListener()
         setListener()
+
 
     }
 
@@ -89,8 +93,21 @@ class PartnersScreen : Fragment() {
                 }
             }
         }
-        viewModel.requestPartners()
 
 
+
+    }
+
+    private fun recyclerScrollListener() {
+        binding.rcViewPartners.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!binding.rcViewPartners.canScrollVertically(1)) {
+                   viewModel.requestPartners()
+                }
+            }
+        }
+
+        )
     }
 }

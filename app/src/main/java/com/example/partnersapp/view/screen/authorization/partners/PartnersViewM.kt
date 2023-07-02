@@ -11,12 +11,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
+
 
 class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
 
     private val webRepo = RetrofitClient()
     private val dateS = DataStoreManager(getApplication())
+    private var page = 1
 
     private val _partners: MutableStateFlow<List<Partner>> = MutableStateFlow(
         emptyList()
@@ -31,14 +32,15 @@ class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
 
     init { }
 
-    fun requestPartners() {
-        viewModelScope.launch(Dispatchers.IO) {
+    suspend fun requestPartners() {
             val tokenM = dateS.loadToken()
-            val result = webRepo.retrofit.getPartners("JWT $tokenM")
-//            Log.d("MyLog", "$tokenM")
-            _partners.value = result.detail.partners
+            val result = webRepo.retrofit.getPartners(page,"JWT $tokenM")
+                if (result.isSuccessful && result.body()?.statusId == 200){
+                    page += 1
+                    _partners.value = result.body()!!.detail.partners
+                }
         }
-    }
+
     fun requestPartnerCategory(){
         viewModelScope.launch(Dispatchers.IO) {
             val tokenM = dateS.loadToken()
