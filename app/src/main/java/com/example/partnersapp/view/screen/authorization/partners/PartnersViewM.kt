@@ -30,18 +30,22 @@ class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
     val partnersCategory = _partnersCategory.asStateFlow()
 
 
-    init { }
+    init {}
 
-    suspend fun requestPartners() {
-            val tokenM = dateS.loadToken()
-            val result = webRepo.retrofit.getPartners(page,"JWT $tokenM")
-                if (result.isSuccessful && result.body()?.statusId == 200){
-                    page += 1
-                    _partners.value = result.body()!!.detail.partners
-                }
+    suspend fun requestPartners(): String {
+        val tokenM = dateS.loadToken()
+
+        val result = webRepo.retrofit.getPartners(page, "JWT $tokenM")
+        return if (result.isSuccessful) {
+            page += 1
+            _partners.value = result.body()!!.detail.partners
+            "Ok"
+        } else {
+            "Finished loading data"
         }
+    }
 
-    fun requestPartnerCategory(){
+    fun requestPartnerCategory() {
         viewModelScope.launch(Dispatchers.IO) {
             val tokenM = dateS.loadToken()
             val resultCategory = webRepo.retrofit.getPartnerCategory("JWT $tokenM")
