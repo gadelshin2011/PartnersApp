@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -12,12 +13,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
 import com.example.partnersapp.model.partnerModels.TextViewModel
 import com.example.partnersapp.presentation.adapter.AdapterPartners
 import com.example.partnersapp.presentation.adapter.AdapterPartnersCategory
 import com.example.partnersapp.presentation.adapter.AdapterTextView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PartnersScreen : Fragment() {
@@ -45,7 +48,8 @@ class PartnersScreen : Fragment() {
     private fun init() {
 
 
-        val concatAdapter = ConcatAdapter(adapterCategoryPartners, adapterTextView, adapterAllPartners)
+        val concatAdapter =
+            ConcatAdapter(adapterCategoryPartners, adapterTextView, adapterAllPartners)
         binding.rcViewPartners.layoutManager = GridLayoutManager(context, 2)
         binding.rcViewPartners.adapter = concatAdapter
 
@@ -61,7 +65,9 @@ class PartnersScreen : Fragment() {
         }
 
         showData()
+        recyclerScrollListener()
         setListener()
+
 
     }
 
@@ -89,8 +95,31 @@ class PartnersScreen : Fragment() {
                 }
             }
         }
-        viewModel.requestPartners()
 
 
+
+    }
+
+    private  fun recyclerScrollListener() {
+        binding.rcViewPartners.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!binding.rcViewPartners.canScrollVertically(1)) {
+                    lifecycleScope.launch(Dispatchers.Main){
+                        val dataPage =  viewModel.requestPartners()
+
+                        if (dataPage == "Ok"){
+                            viewModel.requestPartners()
+                        } else {
+                            Toast.makeText(context,dataPage,Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+
+                }
+            }
+        }
+
+        )
     }
 }
