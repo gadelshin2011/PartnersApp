@@ -19,6 +19,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentAuthorizationBinding
+import com.example.partnersapp.view.screen.authorization.viewModel.AuthViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -61,10 +62,10 @@ class Authorization : Fragment() {
 
             if (!binding.imageButtonPassVisible.isSelected) {
                 binding.edPassword.transformationMethod =
-                    PasswordTransformationMethod.getInstance();
+                    PasswordTransformationMethod.getInstance()
             } else {
                 binding.edPassword.transformationMethod =
-                    HideReturnsTransformationMethod.getInstance();
+                    HideReturnsTransformationMethod.getInstance()
             }
         }
 

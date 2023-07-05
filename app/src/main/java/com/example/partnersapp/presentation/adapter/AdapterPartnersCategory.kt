@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.partnersapp.databinding.RcItemCategoryBinding
 import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
-import com.squareup.picasso.Picasso
+
 
 class AdapterPartnersCategory() : RecyclerView.Adapter<AdapterPartnersCategory.MyHolder>() {
 
@@ -31,7 +31,7 @@ class AdapterPartnersCategory() : RecyclerView.Adapter<AdapterPartnersCategory.M
 
         @SuppressLint("SetTextI18n")
         private fun setCountPartners(countPartners: Int) {
-            if (countPartners <= 1) {
+            if (countPartners == 1) {
                 binding.countPartners.text = "$countPartners предложение"
             }
             if (countPartners in 2..4) {
@@ -39,6 +39,9 @@ class AdapterPartnersCategory() : RecyclerView.Adapter<AdapterPartnersCategory.M
             }
             if (countPartners >= 5) {
                 binding.countPartners.text = "$countPartners предложений"
+            }
+            if (countPartners == 0){
+                binding.countPartners.text = "нет предложений"
             }
         }
 

@@ -1,4 +1,4 @@
-package com.example.partnersapp.view.screen.authorization
+package com.example.partnersapp.view.screen.authorization.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.screen.authorization.partners.PartnersScreen">
+    tools:context=".view.partnersScreen.PartnersScreen">
 
     <ImageButton
         android:id="@+id/imageButtonBack"
@@ -14,6 +14,7 @@
         android:background="@color/white"
         android:layout_marginTop="12dp"
         android:layout_marginStart="16dp"
+        android:contentDescription="@drawable/ic_baseline_arrow_back_24"
         android:src="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="@+id/topPartLayout"
         app:layout_constraintTop_toTopOf="@+id/topPartLayout" />
@@ -35,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Скидки от партнеров"
+            android:text="@string/sale_partners"
             android:textColor="#2A2E35"
             android:textSize="17sp" />
 

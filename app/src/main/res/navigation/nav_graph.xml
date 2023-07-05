@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/partnersScreen"
-        android:name="com.example.partnersapp.view.screen.authorization.partners.PartnersScreen"
+        android:name="com.example.partnersapp.view.partnersScreen.PartnersScreen"
         android:label="fragment_partners_screen"
         tools:layout="@layout/fragment_partners_screen" >
         <action

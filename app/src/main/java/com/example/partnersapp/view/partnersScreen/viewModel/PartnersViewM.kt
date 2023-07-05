@@ -1,10 +1,11 @@
-package com.example.partnersapp.view.screen.authorization.partners
+package com.example.partnersapp.view.partnersScreen.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.partnersapp.model.partnerModels.allPartners.Partner
 import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
+import com.example.partnersapp.model.partnerModels.category.categoryNews.PartnerCategoryNewDetail
 import com.example.partnersapp.presentation.db.DataStoreManager
 import com.example.partnersapp.presentation.network.RetrofitClient
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,7 @@ class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
     private val webRepo = RetrofitClient()
     private val dateS = DataStoreManager(getApplication())
     private var page = 1
+    private var cityId = 1
 
     private val _partners: MutableStateFlow<List<Partner>> = MutableStateFlow(
         emptyList()
@@ -28,6 +30,11 @@ class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
         emptyList()
     )
     val partnersCategory = _partnersCategory.asStateFlow()
+
+    private val _newPartners: MutableStateFlow<List<PartnerCategoryNewDetail>> = MutableStateFlow(
+        emptyList()
+    )
+    val newPartners = _newPartners.asStateFlow()
 
 
     init {}
@@ -50,6 +57,18 @@ class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
             val tokenM = dateS.loadToken()
             val resultCategory = webRepo.retrofit.getPartnerCategory("JWT $tokenM")
             _partnersCategory.value = resultCategory.detail
+        }
+    }
+
+    suspend fun requestNewPartners(): String {
+        val tokenM = dateS.loadToken()
+
+        val result = webRepo.retrofit.getNewPartners(cityId, "JWT $tokenM")
+        return if (result.isSuccessful) {
+            _newPartners.value = result.body()!!.detail
+            "Ok"
+        } else {
+            "loading category 'New' failed"
         }
     }
 

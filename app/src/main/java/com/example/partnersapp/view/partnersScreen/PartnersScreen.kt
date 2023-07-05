@@ -1,4 +1,4 @@
-package com.example.partnersapp.view.screen.authorization.partners
+package com.example.partnersapp.view.partnersScreen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,9 +17,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
 import com.example.partnersapp.model.partnerModels.TextViewModel
+import com.example.partnersapp.model.partnerModels.category.CategoryNew
+import com.example.partnersapp.presentation.adapter.AdapterCategoryNew
 import com.example.partnersapp.presentation.adapter.AdapterPartners
 import com.example.partnersapp.presentation.adapter.AdapterPartnersCategory
 import com.example.partnersapp.presentation.adapter.AdapterTextView
+import com.example.partnersapp.view.partnersScreen.viewModel.PartnersViewM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -27,6 +30,7 @@ class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
     private val adapterAllPartners = AdapterPartners()
     private val adapterCategoryPartners = AdapterPartnersCategory()
+    private val adapterCategoryNew = AdapterCategoryNew()
     private val adapterTextView = AdapterTextView()
     private val viewModel: PartnersViewM by activityViewModels()
 
@@ -42,6 +46,7 @@ class PartnersScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapterTextView.setListTV(listOf(TextViewModel()))
+        adapterCategoryNew.setListNCateg(listOf(CategoryNew()))
         init()
     }
 
@@ -49,14 +54,19 @@ class PartnersScreen : Fragment() {
 
 
         val concatAdapter =
-            ConcatAdapter(adapterCategoryPartners, adapterTextView, adapterAllPartners)
+            ConcatAdapter(
+                adapterCategoryNew,
+                adapterCategoryPartners,
+                adapterTextView,
+                adapterAllPartners
+            )
         binding.rcViewPartners.layoutManager = GridLayoutManager(context, 2)
         binding.rcViewPartners.adapter = concatAdapter
 
         (binding.rcViewPartners.layoutManager as GridLayoutManager).spanSizeLookup = object :
             GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (position < adapterCategoryPartners.itemCount) {
+                return if (position < adapterCategoryPartners.itemCount + 1) {
                     1
                 } else {
                     2
@@ -97,21 +107,18 @@ class PartnersScreen : Fragment() {
         }
 
 
-
     }
 
-    private  fun recyclerScrollListener() {
+    private fun recyclerScrollListener() {
         binding.rcViewPartners.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!binding.rcViewPartners.canScrollVertically(1)) {
-                    lifecycleScope.launch(Dispatchers.Main){
-                        val dataPage =  viewModel.requestPartners()
 
-                        if (dataPage == "Ok"){
-                            viewModel.requestPartners()
-                        } else {
-                            Toast.makeText(context,dataPage,Toast.LENGTH_LONG).show()
+                if (!binding.rcViewPartners.canScrollVertically(1)) {
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        val dataPage = viewModel.requestPartners()
+                        if (dataPage != "Ok") {
+                            Toast.makeText(context, dataPage, Toast.LENGTH_LONG).show()
                         }
                     }
 
