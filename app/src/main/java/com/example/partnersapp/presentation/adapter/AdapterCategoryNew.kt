@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.partnersapp.databinding.RcItemCategoryBinding
 import com.example.partnersapp.model.partnerModels.category.CategoryNew
+import com.example.partnersapp.view.ItemClickListener
 
 
-class AdapterCategoryNew:RecyclerView.Adapter<AdapterCategoryNew.MyHolder>() {
+class AdapterCategoryNew(private val itemClickListener: ItemClickListener):RecyclerView.Adapter<AdapterCategoryNew.MyHolder>() {
 
     private var listItem:  MutableList<CategoryNew> = mutableListOf()
 
@@ -49,11 +50,15 @@ class AdapterCategoryNew:RecyclerView.Adapter<AdapterCategoryNew.MyHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
-        return MyHolder(
-            RcItemCategoryBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
+
+        val view = RcItemCategoryBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
         )
+        val holder = MyHolder(view)
+        view.root.setOnClickListener {
+            itemClickListener.onItemClick(holder.adapterPosition)
+        }
+        return holder
     }
 
     override fun getItemCount(): Int {

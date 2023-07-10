@@ -22,15 +22,16 @@ import com.example.partnersapp.presentation.adapter.AdapterCategoryNew
 import com.example.partnersapp.presentation.adapter.AdapterPartners
 import com.example.partnersapp.presentation.adapter.AdapterPartnersCategory
 import com.example.partnersapp.presentation.adapter.AdapterTextView
+import com.example.partnersapp.view.ItemClickListener
 import com.example.partnersapp.view.partnersScreen.viewModel.PartnersViewM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
+    private lateinit var  adapterCategoryNew: AdapterCategoryNew
     private val adapterAllPartners = AdapterPartners()
     private val adapterCategoryPartners = AdapterPartnersCategory()
-    private val adapterCategoryNew = AdapterCategoryNew()
     private val adapterTextView = AdapterTextView()
     private val viewModel: PartnersViewM by activityViewModels()
 
@@ -45,13 +46,21 @@ class PartnersScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
         adapterTextView.setListTV(listOf(TextViewModel()))
         adapterCategoryNew.setListNCateg(listOf(CategoryNew()))
-        init()
+
     }
 
     private fun init() {
 
+        val itemClickListener = object : ItemClickListener {
+            override fun onItemClick(position: Int) {
+                // Откройте новый фрагмент здесь, используя позицию элемента RecyclerView
+                findNavController().navigate(R.id.action_partnersScreen_to_listPartnersInCategory)
+            }
+        }
+        adapterCategoryNew = AdapterCategoryNew(itemClickListener)
 
         val concatAdapter =
             ConcatAdapter(
@@ -77,6 +86,8 @@ class PartnersScreen : Fragment() {
         showData()
         recyclerScrollListener()
         setListener()
+
+
 
 
     }
