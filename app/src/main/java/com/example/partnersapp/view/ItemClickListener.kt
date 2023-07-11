@@ -1,5 +1,6 @@
 package com.example.partnersapp.view
 
 interface ItemClickListener {
-    fun onItemClick(position: Int)
+    fun onItemClickCategory(position: Int)
+    fun onItemClickPartners(position: Int)
 }

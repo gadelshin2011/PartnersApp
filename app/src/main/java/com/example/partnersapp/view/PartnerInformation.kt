@@ -7,16 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.partnersapp.R
-import com.example.partnersapp.databinding.FragmentListPartnersInCategoryBinding
+import com.example.partnersapp.databinding.FragmentPartnerInformationBinding
+import com.example.partnersapp.databinding.RcItemTvBinding
 
-class ListPartnersInCategory : Fragment() {
-    lateinit var binding: FragmentListPartnersInCategoryBinding
+class PartnerInformation : Fragment() {
+lateinit var binding: FragmentPartnerInformationBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentListPartnersInCategoryBinding.inflate(inflater,container,false)
+        binding = FragmentPartnerInformationBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -24,8 +25,8 @@ class ListPartnersInCategory : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.button.setOnClickListener {
-         //  findNavController().navigate(R.id.action_listPartnersInCategory_to_partnersScreen)
+        binding.buttonExit.setOnClickListener {
+            //  findNavController().navigate(R.id.action_listPartnersInCategory_to_partnersScreen)
             findNavController().popBackStack()
         }
     }

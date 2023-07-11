@@ -56,7 +56,7 @@ class AdapterCategoryNew(private val itemClickListener: ItemClickListener):Recyc
         )
         val holder = MyHolder(view)
         view.root.setOnClickListener {
-            itemClickListener.onItemClick(holder.adapterPosition)
+            itemClickListener.onItemClickCategory(holder.adapterPosition)
         }
         return holder
     }

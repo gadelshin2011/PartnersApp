@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.partnersapp.databinding.RcItemCategoryBinding
 import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
+import com.example.partnersapp.view.ItemClickListener
 
 
-class AdapterPartnersCategory() : RecyclerView.Adapter<AdapterPartnersCategory.MyHolder>() {
+class AdapterPartnersCategory(private val itemClickListener: ItemClickListener) :
+    RecyclerView.Adapter<AdapterPartnersCategory.MyHolder>() {
 
     private var listItemCategory: MutableList<PartnerCategoryDetail> = mutableListOf()
 
@@ -40,7 +42,7 @@ class AdapterPartnersCategory() : RecyclerView.Adapter<AdapterPartnersCategory.M
             if (countPartners >= 5) {
                 binding.countPartners.text = "$countPartners предложений"
             }
-            if (countPartners == 0){
+            if (countPartners == 0) {
                 binding.countPartners.text = "нет предложений"
             }
         }
@@ -58,11 +60,17 @@ class AdapterPartnersCategory() : RecyclerView.Adapter<AdapterPartnersCategory.M
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
-        return MyHolder(
-            RcItemCategoryBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
+
+        val view = RcItemCategoryBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
         )
+
+        val holder = MyHolder(view)
+        view.root.setOnClickListener {
+            itemClickListener.onItemClickCategory(holder.adapterPosition)
+        }
+        return holder
+
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
@@ -75,7 +83,10 @@ class AdapterPartnersCategory() : RecyclerView.Adapter<AdapterPartnersCategory.M
 
     @SuppressLint("NotifyDataSetChanged")
     fun setListCategory(list: List<PartnerCategoryDetail>) {
-        listItemCategory.addAll(list)
-        notifyDataSetChanged()
+        if (list.isEmpty() || list != listItemCategory){
+            listItemCategory.addAll(list)
+            notifyDataSetChanged()
+        }
+
     }
 }

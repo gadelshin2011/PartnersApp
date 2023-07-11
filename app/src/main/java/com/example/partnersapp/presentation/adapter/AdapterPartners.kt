@@ -74,8 +74,11 @@ class AdapterPartners : RecyclerView.Adapter<AdapterPartners.MyHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun setList(list: List<Partner>) {
-        listItem.addAll(list)
-        notifyDataSetChanged()
+        if (list.isEmpty() || list != listItem){
+            listItem.addAll(list)
+            notifyDataSetChanged()
+        }
+
     }
 
 }
