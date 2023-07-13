@@ -6,6 +6,10 @@ data class Partner(
     val color: String,
     val discount: Int,
     val id: Int,
+    @SerializedName("is_ufanet")
+    val isUfanet:Boolean,
+    @SerializedName("partner_active_before")
+    val partnerActiveBefore:Int,
     val id_category: Int,
     @SerializedName("name")
     val partnerName: String,

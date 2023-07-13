@@ -7,10 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.partnersapp.databinding.RcItemCategoryBinding
 import com.example.partnersapp.model.partnerModels.category.CategoryNew
-import com.example.partnersapp.view.ItemClickListener
 
 
-class AdapterCategoryNew(private val itemClickListener: ItemClickListener):RecyclerView.Adapter<AdapterCategoryNew.MyHolder>() {
+class AdapterCategoryNew(private val itemClickListener: (CategoryNew) -> Unit):RecyclerView.Adapter<AdapterCategoryNew.MyHolder>() {
 
     private var listItem:  MutableList<CategoryNew> = mutableListOf()
 
@@ -56,7 +55,7 @@ class AdapterCategoryNew(private val itemClickListener: ItemClickListener):Recyc
         )
         val holder = MyHolder(view)
         view.root.setOnClickListener {
-            itemClickListener.onItemClickCategory(holder.adapterPosition)
+            itemClickListener(listItem[holder.adapterPosition])
         }
         return holder
     }
@@ -70,8 +69,12 @@ class AdapterCategoryNew(private val itemClickListener: ItemClickListener):Recyc
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setListNCateg(list: List<CategoryNew>) {
-        listItem.addAll(list)
-        notifyDataSetChanged()
+    fun setListCategoryNew(list: List<CategoryNew>) {
+        if (list.isEmpty() || list != listItem){
+            listItem.clear()
+            listItem.addAll(list)
+            notifyDataSetChanged()
+        }
+
     }
 }

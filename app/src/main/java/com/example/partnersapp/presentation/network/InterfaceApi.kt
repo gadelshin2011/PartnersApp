@@ -24,11 +24,19 @@ interface InterfaceApi {
         @Header("Authorization") tokenM: String
     ): PartnerCategory
 
-    @GET("http://partner.ufanet.ru/api/v0/new_partner/{city_id}/")
+    @GET("/api/v0/new_partner/{city_id}/")
     suspend fun getNewPartners(
-        @Path("city_id") id: Int,
+        @Path("city_id") cityId: Int,
         @Header("Authorization") tokenM: String
     ): Response<PartnerCategoryNew>
+
+    @GET("/api/v0/showcategory/{city_id}/")
+    suspend fun getListPartnersInCategory(
+        @Path("city_id") cityId: String,
+        @Query("category") categoryId:Int,
+        @Header("Authorization") tokenM: String,
+
+    ): Response<PartnersModel>
 
 
 }

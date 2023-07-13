@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/listPartnersInCategory"
-        android:name="com.example.partnersapp.view.ListPartnersInCategory"
+        android:name="com.example.partnersapp.view.list_partner_in_category.ListPartnersInCategory"
         android:label="fragment_list_partners_in_category"
         tools:layout="@layout/fragment_list_partners_in_category" >
         <action

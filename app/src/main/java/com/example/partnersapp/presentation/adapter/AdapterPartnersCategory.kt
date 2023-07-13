@@ -8,10 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.partnersapp.databinding.RcItemCategoryBinding
 import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
-import com.example.partnersapp.view.ItemClickListener
 
 
-class AdapterPartnersCategory(private val itemClickListener: ItemClickListener) :
+class AdapterPartnersCategory(private val itemClickListener: (PartnerCategoryDetail) -> Unit) :
     RecyclerView.Adapter<AdapterPartnersCategory.MyHolder>() {
 
     private var listItemCategory: MutableList<PartnerCategoryDetail> = mutableListOf()
@@ -67,7 +66,8 @@ class AdapterPartnersCategory(private val itemClickListener: ItemClickListener) 
 
         val holder = MyHolder(view)
         view.root.setOnClickListener {
-            itemClickListener.onItemClickCategory(holder.adapterPosition)
+            itemClickListener(listItemCategory[holder.adapterPosition])
+
         }
         return holder
 
@@ -83,7 +83,8 @@ class AdapterPartnersCategory(private val itemClickListener: ItemClickListener) 
 
     @SuppressLint("NotifyDataSetChanged")
     fun setListCategory(list: List<PartnerCategoryDetail>) {
-        if (list.isEmpty() || list != listItemCategory){
+        if (list.isEmpty() || list != listItemCategory) {
+            listItemCategory.clear()
             listItemCategory.addAll(list)
             notifyDataSetChanged()
         }

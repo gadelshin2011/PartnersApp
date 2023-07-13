@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isEmpty
-import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -20,19 +18,20 @@ import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
 import com.example.partnersapp.model.partnerModels.TextViewModel
 import com.example.partnersapp.model.partnerModels.category.CategoryNew
+import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
 import com.example.partnersapp.presentation.adapter.AdapterCategoryNew
 import com.example.partnersapp.presentation.adapter.AdapterPartners
 import com.example.partnersapp.presentation.adapter.AdapterPartnersCategory
 import com.example.partnersapp.presentation.adapter.AdapterTextView
-import com.example.partnersapp.view.ItemClickListener
+import com.example.partnersapp.view.list_partner_in_category.ListPartnersInCategory
 import com.example.partnersapp.view.partnersScreen.viewModel.PartnersViewM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
-    private lateinit var  adapterCategoryNew: AdapterCategoryNew
-    private lateinit var  adapterCategoryPartners : AdapterPartnersCategory
+    private val adapterCategoryNew = AdapterCategoryNew(::selectItemCategoryNew)
+    private val  adapterCategoryPartners = AdapterPartnersCategory(::selectItemCategory)
     private val adapterAllPartners = AdapterPartners()
     private val adapterTextView = AdapterTextView()
     private val viewModel: PartnersViewM by activityViewModels()
@@ -51,7 +50,7 @@ class PartnersScreen : Fragment() {
 
             init()
             adapterTextView.setListTV(listOf(TextViewModel()))
-            adapterCategoryNew.setListNCateg(listOf(CategoryNew()))
+            adapterCategoryNew.setListCategoryNew(listOf(CategoryNew()))
 
 
 
@@ -60,18 +59,20 @@ class PartnersScreen : Fragment() {
 
     private fun init() {
 
-        val itemClickListener = object : ItemClickListener {
-            override fun onItemClickCategory(position: Int) {
-                findNavController().navigate(R.id.action_partnersScreen_to_listPartnersInCategory)
 
-            }
+//        val itemClickListener = object : ItemClickListener {
+//            override fun onItemClickCategory(position: Int) {
+//                findNavController().navigate(R.id.action_partnersScreen_to_listPartnersInCategory)
+//
+////                setFragmentResultListener("itemPartnerCategory", bundleOf("bundleKey" to PartnerCategoryDetail().id ))
+//            }
+//
+//            override fun onItemClickPartners(position: Int) {
+//                TODO("Not yet implemented")
+//            }
+//        }
 
-            override fun onItemClickPartners(position: Int) {
-                TODO("Not yet implemented")
-            }
-        }
-        adapterCategoryNew = AdapterCategoryNew(itemClickListener)
-        adapterCategoryPartners = AdapterPartnersCategory(itemClickListener)
+
 
         val concatAdapter =
             ConcatAdapter(
@@ -93,14 +94,22 @@ class PartnersScreen : Fragment() {
                 }
             }
         }
-
         showData()
         recyclerScrollListener()
         setListener()
 
+    }
 
+    private fun selectItemCategory(result: PartnerCategoryDetail){
+        findNavController().navigate(R.id.action_partnersScreen_to_listPartnersInCategory,
+            ListPartnersInCategory.getBundle(result)
+        )
 
-
+    }
+    private fun selectItemCategoryNew(results: CategoryNew){
+//        findNavController().navigate(R.id.action_partnersScreen_to_listPartnersInCategory,
+//            ListPartnersInCategory.getBundleCategoryNew(results)
+//        )
     }
 
     private fun setListener() {
@@ -140,7 +149,7 @@ class PartnersScreen : Fragment() {
                     lifecycleScope.launch(Dispatchers.Main) {
                         val dataPage = viewModel.requestPartners()
                         if (dataPage != "Ok") {
-                            Toast.makeText(context, dataPage, Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, dataPage, Toast.LENGTH_SHORT).show()
                         }
                     }
 
