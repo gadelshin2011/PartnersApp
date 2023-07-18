@@ -5,6 +5,7 @@ import com.example.partnersapp.model.authModels.AuthRequest
 import com.example.partnersapp.model.partnerModels.allPartners.PartnersModel
 import com.example.partnersapp.model.partnerModels.category.PartnerCategory
 import com.example.partnersapp.model.partnerModels.category.categoryNews.PartnerCategoryNew
+import com.example.partnersapp.model.partnerModels.category.showCategory.ShowCategory
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -24,11 +25,19 @@ interface InterfaceApi {
         @Header("Authorization") tokenM: String
     ): PartnerCategory
 
-    @GET("http://partner.ufanet.ru/api/v0/new_partner/{city_id}/")
+    @GET("/api/v0/new_partner/{city_id}/")
     suspend fun getNewPartners(
         @Path("city_id") id: Int,
         @Header("Authorization") tokenM: String
     ): Response<PartnerCategoryNew>
+
+    @GET("/api/v0/partner/showcategory/{city_id}/")
+    suspend fun getListPartnersInCategory(
+        @Path("city_id") cityId: String,
+        @Query("category") categoryId:Int,
+        @Header("Authorization") tokenM: String,
+    ): Response<ShowCategory>
+
 
 
 }
