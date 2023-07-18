@@ -3,10 +3,12 @@ package com.example.partnersapp.presentation.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.partnersapp.databinding.RcItemCategoryBinding
 import com.example.partnersapp.model.partnerModels.category.CategoryNew
+import com.example.partnersapp.model.partnerModels.category.showCategory.DetailPartner
 
 
 class AdapterCategoryNew(private val itemClickListener: (CategoryNew) -> Unit):RecyclerView.Adapter<AdapterCategoryNew.MyHolder>() {
@@ -68,13 +70,38 @@ class AdapterCategoryNew(private val itemClickListener: (CategoryNew) -> Unit):R
        holder.bind(listItem[position])
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setListCategoryNew(list: List<CategoryNew>) {
-        if (list.isEmpty() || list != listItem){
-            listItem.clear()
-            listItem.addAll(list)
-            notifyDataSetChanged()
+        val personDiffUtil = PersonDiffUtil(
+            oldList = listItem,
+            newList = list
+        )
+        val diffResult = DiffUtil.calculateDiff(personDiffUtil)
+        listItem.clear()
+        listItem.addAll(list)
+        diffResult.dispatchUpdatesTo(this)
+
+    }
+
+    private  class PersonDiffUtil(
+        val newList: List<CategoryNew>,
+        val oldList: List<CategoryNew>
+    ): DiffUtil.Callback(){
+        override fun getOldListSize(): Int {
+            return  oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return newList[newItemPosition].id == oldList[oldItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return newList[newItemPosition] == oldList[oldItemPosition]
         }
 
     }
+
 }

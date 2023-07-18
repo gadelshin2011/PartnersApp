@@ -9,7 +9,7 @@ data class CategoryNew(
     val categoryName: String = "Новинки",
     val categoryImage: Int = R.drawable.category_new,
     val categoryCount: Int = 0,
-    val id_category: Int = 999
+    val id: Int = 999
 
 
 ): Parcelable

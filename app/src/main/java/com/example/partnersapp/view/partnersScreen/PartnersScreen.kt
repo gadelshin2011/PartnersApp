@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
     private val adapterCategoryNew = AdapterCategoryNew(::selectItemCategoryNew)
-    private val  adapterCategoryPartners = AdapterPartnersCategory(::selectItemCategory)
+    private val adapterCategoryPartners = AdapterPartnersCategory(::selectItemCategory)
     private val adapterAllPartners = AdapterPartners()
     private val adapterTextView = AdapterTextView()
     private val viewModel: PartnersViewM by activityViewModels()
@@ -48,11 +48,9 @@ class PartnersScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-            init()
-            adapterTextView.setListTV(listOf(TextViewModel()))
-            adapterCategoryNew.setListCategoryNew(listOf(CategoryNew()))
-
-
+        init()
+        adapterTextView.setListTV(listOf(TextViewModel()))
+        adapterCategoryNew.setListCategoryNew(listOf(CategoryNew()))
 
 
     }
@@ -71,7 +69,6 @@ class PartnersScreen : Fragment() {
 //                TODO("Not yet implemented")
 //            }
 //        }
-
 
 
         val concatAdapter =
@@ -100,13 +97,15 @@ class PartnersScreen : Fragment() {
 
     }
 
-    private fun selectItemCategory(result: PartnerCategoryDetail){
-        findNavController().navigate(R.id.action_partnersScreen_to_listPartnersInCategory,
+    private fun selectItemCategory(result: PartnerCategoryDetail) {
+        findNavController().navigate(
+            R.id.action_partnersScreen_to_listPartnersInCategory,
             ListPartnersInCategory.getBundle(result)
         )
 
     }
-    private fun selectItemCategoryNew(results: CategoryNew){
+
+    private fun selectItemCategoryNew(results: CategoryNew) {
 //        findNavController().navigate(R.id.action_partnersScreen_to_listPartnersInCategory,
 //            ListPartnersInCategory.getBundleCategoryNew(results)
 //        )
@@ -152,7 +151,6 @@ class PartnersScreen : Fragment() {
                             Toast.makeText(context, dataPage, Toast.LENGTH_SHORT).show()
                         }
                     }
-
 
                 }
             }

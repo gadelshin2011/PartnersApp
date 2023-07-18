@@ -15,16 +15,16 @@ import androidx.navigation.fragment.findNavController
 import com.example.partnersapp.databinding.FragmentListPartnersInCategoryBinding
 import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
 import com.example.partnersapp.presentation.adapter.AdapterPartners
+import com.example.partnersapp.presentation.adapter.ShowCategoryAdapter
 import com.example.partnersapp.view.list_partner_in_category.viewModel.ListPartnersInCategoryViewModel
 import com.example.partnersapp.view.partnersScreen.viewModel.PartnersViewM
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ListPartnersInCategory : Fragment() {
     lateinit var binding: FragmentListPartnersInCategoryBinding
     private lateinit var currentModel: PartnerCategoryDetail
-
-    //    private lateinit var currentModelN: CategoryNew
-    private val adapterShowPartnersFromCategory = AdapterPartners()
+    private val adapterShowPartnersFromCategory = ShowCategoryAdapter()
     private val viewModel: ListPartnersInCategoryViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -33,8 +33,6 @@ class ListPartnersInCategory : Fragment() {
     ): View? {
         binding = FragmentListPartnersInCategoryBinding.inflate(inflater, container, false)
         currentModel = requireArguments().getParcelable<PartnerCategoryDetail>("category")!!
-//        currentModelN = requireArguments().getParcelable<CategoryNew>("categoryN")!!
-        // Inflate the layout for this fragment
         return binding.root
     }
 
@@ -58,19 +56,18 @@ class ListPartnersInCategory : Fragment() {
                 }
             }
         }
-        lifecycleScope.launch{
+        viewLifecycleOwner.lifecycleScope.launch{
             val info = viewModel.requestPartnersInCategory(currentModel.id)
             if (info != "Ok"){
                 Toast.makeText(context, info, Toast.LENGTH_LONG).show()
             }
         }
-
     }
 
 
     private fun setListener() {
         binding.closeButton.setOnClickListener {
-            //  findNavController().navigate(R.id.action_listPartnersInCategory_to_partnersScreen)
+                //  findNavController().navigate(R.id.action_listPartnersInCategory_to_partnersScreen)
             findNavController().popBackStack()
         }
     }

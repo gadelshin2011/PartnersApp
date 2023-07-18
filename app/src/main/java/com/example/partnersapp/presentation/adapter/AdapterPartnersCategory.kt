@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.partnersapp.databinding.RcItemCategoryBinding
 import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
+import com.example.partnersapp.model.partnerModels.category.showCategory.DetailPartner
 
 
 class AdapterPartnersCategory(private val itemClickListener: (PartnerCategoryDetail) -> Unit) :
@@ -81,12 +83,36 @@ class AdapterPartnersCategory(private val itemClickListener: (PartnerCategoryDet
         return listItemCategory.size
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setListCategory(list: List<PartnerCategoryDetail>) {
-        if (list.isEmpty() || list != listItemCategory) {
-            listItemCategory.clear()
-            listItemCategory.addAll(list)
-            notifyDataSetChanged()
+        val personDiffUtil = PersonDiffUtil(
+            oldList = listItemCategory,
+            newList = list
+        )
+        val diffResult = DiffUtil.calculateDiff(personDiffUtil)
+        listItemCategory.clear()
+        listItemCategory.addAll(list)
+        diffResult.dispatchUpdatesTo(this)
+
+    }
+
+    private  class PersonDiffUtil(
+        val newList: List<PartnerCategoryDetail>,
+        val oldList: List<PartnerCategoryDetail>
+    ): DiffUtil.Callback(){
+        override fun getOldListSize(): Int {
+            return  oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return newList[newItemPosition].id == oldList[oldItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return newList[newItemPosition] == oldList[oldItemPosition]
         }
 
     }
