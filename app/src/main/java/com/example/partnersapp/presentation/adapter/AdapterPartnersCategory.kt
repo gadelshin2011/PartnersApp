@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.partnersapp.databinding.RcItemCategoryBinding
 import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
+import com.example.partnersapp.view.ItemClickListener
 
 
-class AdapterPartnersCategory() : RecyclerView.Adapter<AdapterPartnersCategory.MyHolder>() {
+class AdapterPartnersCategory(private val itemClickListener: ItemClickListener) : RecyclerView.Adapter<AdapterPartnersCategory.MyHolder>() {
 
     private var listItemCategory: MutableList<PartnerCategoryDetail> = mutableListOf()
 
@@ -58,11 +59,17 @@ class AdapterPartnersCategory() : RecyclerView.Adapter<AdapterPartnersCategory.M
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
-        return MyHolder(
-            RcItemCategoryBinding.inflate(
+        val view = RcItemCategoryBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
+
             )
-        )
+        val viewHolder = MyHolder(view)
+                view.root.setOnClickListener {
+            itemClickListener.onItemClick(viewHolder.bindingAdapterPosition)
+        }
+
+        return viewHolder
+
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {

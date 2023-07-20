@@ -22,17 +22,21 @@ import com.example.partnersapp.presentation.adapter.AdapterCategoryNew
 import com.example.partnersapp.presentation.adapter.AdapterPartners
 import com.example.partnersapp.presentation.adapter.AdapterPartnersCategory
 import com.example.partnersapp.presentation.adapter.AdapterTextView
+import com.example.partnersapp.view.ItemClickListener
 import com.example.partnersapp.view.partnersScreen.viewModel.PartnersViewM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PartnersScreen : Fragment() {
+
     lateinit var binding: FragmentPartnersScreenBinding
+    lateinit var adapterCategoryPartners: AdapterPartnersCategory
+
     private val adapterAllPartners = AdapterPartners()
-    private val adapterCategoryPartners = AdapterPartnersCategory()
     private val adapterCategoryNew = AdapterCategoryNew()
     private val adapterTextView = AdapterTextView()
     private val viewModel: PartnersViewM by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,9 +52,18 @@ class PartnersScreen : Fragment() {
         adapterTextView.setListTV(listOf(TextViewModel()))
         adapterCategoryNew.setListNCateg(listOf(CategoryNew()))
         init()
+
     }
 
     private fun init() {
+
+        val itemClickListener = object : ItemClickListener {
+            override fun onItemClick(position: Int) {
+                // Откройте новый фрагмент здесь, используя позицию элемента RecyclerView
+
+            }
+        }
+        adapterCategoryPartners = AdapterPartnersCategory(itemClickListener)
 
 
         val concatAdapter =
@@ -62,6 +75,7 @@ class PartnersScreen : Fragment() {
             )
         binding.rcViewPartners.layoutManager = GridLayoutManager(context, 2)
         binding.rcViewPartners.adapter = concatAdapter
+
 
         (binding.rcViewPartners.layoutManager as GridLayoutManager).spanSizeLookup = object :
             GridLayoutManager.SpanSizeLookup() {
@@ -79,12 +93,17 @@ class PartnersScreen : Fragment() {
         setListener()
 
 
+
+
     }
+
 
     private fun setListener() {
         binding.imageButtonBack.setOnClickListener {
             findNavController().navigate(R.id.action_partnersScreen_to_authorization)
         }
+
+
     }
 
     private fun showData() {
