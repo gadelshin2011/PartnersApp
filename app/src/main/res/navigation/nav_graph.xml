@@ -22,5 +22,17 @@
         <action
             android:id="@+id/action_partnersScreen_to_authorization"
             app:destination="@id/authorization" />
+        <action
+            android:id="@+id/action_partnersScreen_to_partnersFromCategory"
+            app:destination="@id/partnersFromCategory" />
+    </fragment>
+    <fragment
+        android:id="@+id/partnersFromCategory"
+        android:name="com.example.partnersapp.view.listPartnersFromCategory.PartnersFromCategory"
+        android:label="fragment_partners_from_category"
+        tools:layout="@layout/fragment_partners_from_category" >
+        <action
+            android:id="@+id/action_partnersFromCategory_to_partnersScreen"
+            app:destination="@id/partnersScreen" />
     </fragment>
 </navigation>
