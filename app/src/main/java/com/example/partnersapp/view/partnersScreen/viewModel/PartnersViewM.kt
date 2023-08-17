@@ -1,6 +1,8 @@
 package com.example.partnersapp.view.partnersScreen.viewModel
 
 import android.app.Application
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.partnersapp.model.partnerModels.allPartners.Partner
@@ -64,6 +66,13 @@ class PartnersViewM(apl: Application) : AndroidViewModel(apl) {
         val tokenM = dateS.loadToken()
 
         val result = webRepo.retrofit.getNewPartners(cityId, "JWT $tokenM")
+        Log.d("MyLog", "$result")
+
+        val listSize = result.body()!!.detail.size
+        Log.d("MyLog", "$listSize")
+
+
+
         return if (result.isSuccessful) {
             _newPartners.value = result.body()!!.detail
             "Ok"

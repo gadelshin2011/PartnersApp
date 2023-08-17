@@ -44,7 +44,6 @@ class ListPartnersInCategory : Fragment() {
         setListener()
         showPartners()
 
-
     }
 
     private fun showPartners() {

@@ -25,7 +25,7 @@ interface InterfaceApi {
         @Header("Authorization") tokenM: String
     ): PartnerCategory
 
-    @GET("/api/v0/new_partner/{city_id}/")
+    @GET("/api/v0/partner/new_partner/{city_id}/")
     suspend fun getNewPartners(
         @Path("city_id") cityId: Int,
         @Header("Authorization") tokenM: String

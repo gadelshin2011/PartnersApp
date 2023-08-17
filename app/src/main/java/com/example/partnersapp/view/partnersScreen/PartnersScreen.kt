@@ -1,6 +1,7 @@
 package com.example.partnersapp.view.partnersScreen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ import com.example.partnersapp.view.list_partner_in_category.ListPartnersInCateg
 import com.example.partnersapp.view.partnersScreen.viewModel.PartnersViewM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okio.utf8Size
 
 class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
@@ -136,7 +138,13 @@ class PartnersScreen : Fragment() {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.requestNewPartners()
 
+            }
+
+        }
     }
 
     private fun recyclerScrollListener() {
