@@ -43,7 +43,9 @@ class AdapterTextView:RecyclerView.Adapter<AdapterTextView.MyHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun setListTV(list: List<TextViewModel>) {
-        listItem.addAll(list)
-        notifyDataSetChanged()
+        if (list.isEmpty() || list != listItem) {
+            listItem.addAll(list)
+            notifyDataSetChanged()
+        }
     }
 }

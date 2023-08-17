@@ -1,5 +1,6 @@
 package com.example.partnersapp.presentation.adapter
 
+
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,24 +8,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.partnersapp.databinding.RcItemBinding
-import com.example.partnersapp.model.partnerModels.allPartners.Partner
 import com.example.partnersapp.model.partnerModels.category.showCategory.DetailPartner
-import com.example.partnersapp.model.partnerModels.category.showCategory.ShowCategory
 import com.squareup.picasso.Picasso
 
-class AdapterPartners : RecyclerView.Adapter<AdapterPartners.MyHolder>() {
-
-    private var listItem: MutableList<Partner> = mutableListOf()
+class ShowCategoryAdapter : RecyclerView.Adapter<ShowCategoryAdapter.MyHolder>() {
+    private var listItem: MutableList<DetailPartner> = mutableListOf()
 
 
     class MyHolder(private val binding: RcItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(part: Partner) {
-            setName(part.partnerName)
-            setSphereName(part.sphere_name)
-            setDiscount(part.text_discount)
-            setPromotionDescription(part.promotion_description)
-            setImage(part.partner_image)
-            setLogo(part.partner_logo)
+        fun bind(part: DetailPartner) {
+            setName(part.namePartner)
+            setSphereName(part.sphereName)
+            setDiscount(part.textDiscount)
+            setPromotionDescription(part.promotionDescription)
+            setImage(part.partnerImage)
+            setLogo(part.partnerLogo)
             setColor(part.color)
 
         }
@@ -78,33 +76,40 @@ class AdapterPartners : RecyclerView.Adapter<AdapterPartners.MyHolder>() {
 
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: List<Partner>) {
-        if (listItem != list || listItem.isEmpty())
-            listItem.addAll(list)
-        notifyDataSetChanged()
+    fun setList(list: List<DetailPartner>) {
+        val personDiffUtil = PersonDiffUtil(
+            oldList = listItem,
+            newList = list
+        )
+        val diffResult = DiffUtil.calculateDiff(personDiffUtil)
+        listItem.clear()
+        listItem.addAll(list)
+        diffResult.dispatchUpdatesTo(this)
+
     }
 
-//    private class PersonDiffUtil(
-//        val newList: List<Partner>,
-//        val oldList: List<Partner>
-//    ) : DiffUtil.Callback() {
-//        override fun getOldListSize(): Int {
-//            return oldList.size
-//        }
-//
-//        override fun getNewListSize(): Int {
-//            return newList.size
-//        }
-//
-//        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-//            return newList[newItemPosition].id == oldList[oldItemPosition].id
-//        }
-//
-//        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-//            return newList[newItemPosition] == oldList[oldItemPosition]
-//        }
-//
-//    }
+    private  class PersonDiffUtil(
+        val newList: List<DetailPartner>,
+        val oldList: List<DetailPartner>
+    ): DiffUtil.Callback(){
+        override fun getOldListSize(): Int {
+            return  oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return newList[newItemPosition].id == oldList[oldItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return newList[newItemPosition] == oldList[oldItemPosition]
+        }
+
+    }
+
+
 
 }

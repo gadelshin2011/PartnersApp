@@ -62,10 +62,10 @@ class Authorization : Fragment() {
 
             if (!binding.imageButtonPassVisible.isSelected) {
                 binding.edPassword.transformationMethod =
-                    PasswordTransformationMethod.getInstance()
+                    PasswordTransformationMethod.getInstance();
             } else {
                 binding.edPassword.transformationMethod =
-                    HideReturnsTransformationMethod.getInstance()
+                    HideReturnsTransformationMethod.getInstance();
             }
         }
 

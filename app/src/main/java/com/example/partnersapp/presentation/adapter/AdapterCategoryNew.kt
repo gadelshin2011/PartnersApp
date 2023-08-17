@@ -3,13 +3,15 @@ package com.example.partnersapp.presentation.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.partnersapp.databinding.RcItemCategoryBinding
 import com.example.partnersapp.model.partnerModels.category.CategoryNew
+import com.example.partnersapp.model.partnerModels.category.showCategory.DetailPartner
 
 
-class AdapterCategoryNew:RecyclerView.Adapter<AdapterCategoryNew.MyHolder>() {
+class AdapterCategoryNew(private val itemClickListener: (CategoryNew) -> Unit):RecyclerView.Adapter<AdapterCategoryNew.MyHolder>() {
 
     private var listItem:  MutableList<CategoryNew> = mutableListOf()
 
@@ -49,11 +51,15 @@ class AdapterCategoryNew:RecyclerView.Adapter<AdapterCategoryNew.MyHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
-        return MyHolder(
-            RcItemCategoryBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
+
+        val view = RcItemCategoryBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
         )
+        val holder = MyHolder(view)
+        view.root.setOnClickListener {
+            itemClickListener(listItem[holder.adapterPosition])
+        }
+        return holder
     }
 
     override fun getItemCount(): Int {
@@ -64,9 +70,38 @@ class AdapterCategoryNew:RecyclerView.Adapter<AdapterCategoryNew.MyHolder>() {
        holder.bind(listItem[position])
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setListNCateg(list: List<CategoryNew>) {
+    fun setListCategoryNew(list: List<CategoryNew>) {
+        val personDiffUtil = PersonDiffUtil(
+            oldList = listItem,
+            newList = list
+        )
+        val diffResult = DiffUtil.calculateDiff(personDiffUtil)
+        listItem.clear()
         listItem.addAll(list)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
+
     }
+
+    private  class PersonDiffUtil(
+        val newList: List<CategoryNew>,
+        val oldList: List<CategoryNew>
+    ): DiffUtil.Callback(){
+        override fun getOldListSize(): Int {
+            return  oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return newList[newItemPosition].id == oldList[oldItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return newList[newItemPosition] == oldList[oldItemPosition]
+        }
+
+    }
+
 }
