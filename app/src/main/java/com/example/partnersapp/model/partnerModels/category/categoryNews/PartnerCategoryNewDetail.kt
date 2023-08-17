@@ -8,8 +8,10 @@ data class PartnerCategoryNewDetail(
     val id: Int,
     @SerializedName("id_partner")
     val partnerId: Int,
-    val name_category: String,
-    val name_partner: String,
+    @SerializedName("name_category")
+    val nameCategory: String,
+    @SerializedName("name_partner")
+    val namePartner: String,
     @SerializedName("partner_image_url")
     val partnerImage: String,
     @SerializedName("partner_logo_url")

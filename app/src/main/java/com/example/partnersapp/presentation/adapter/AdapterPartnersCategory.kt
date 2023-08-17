@@ -68,7 +68,7 @@ class AdapterPartnersCategory(private val itemClickListener: (PartnerCategoryDet
 
         val holder = MyHolder(view)
         view.root.setOnClickListener {
-            itemClickListener(listItemCategory[holder.adapterPosition])
+            itemClickListener(listItemCategory[holder.bindingAdapterPosition])
 
         }
         return holder
