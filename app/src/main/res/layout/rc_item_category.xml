@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvPartner"
-    android:layout_width="wrap_content"
+    android:layout_width="156dp"
     android:layout_height="156dp"
-    app:cardCornerRadius="32dp"
+    app:cardCornerRadius="24dp"
     app:cardElevation="0dp"
     android:layout_margin="16dp"
     tools:backgroundTint="#E7E9FF">

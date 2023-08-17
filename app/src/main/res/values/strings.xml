@@ -11,4 +11,6 @@
     <string name="password_auth">Пароль</string>
     <string name="login_auth">Лицевой счет</string>
     <string name="welcome_text_auth">Привет, Друг</string>
+    <string name="sale_partners">Скидки от партнеров</string>
+    <string name="example_name_screen">Название страницы</string>
 </resources>

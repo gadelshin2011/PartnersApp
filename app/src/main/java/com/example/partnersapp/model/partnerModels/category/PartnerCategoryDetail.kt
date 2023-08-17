@@ -1,7 +1,12 @@
 package com.example.partnersapp.model.partnerModels.category
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
+
+@Parcelize
 data class PartnerCategoryDetail(
     val color: String,
     @SerializedName("count_partners")
@@ -13,4 +18,5 @@ data class PartnerCategoryDetail(
     val imageUrl: String,
     val position: Int,
     val title: String
-)
+): Parcelable
+

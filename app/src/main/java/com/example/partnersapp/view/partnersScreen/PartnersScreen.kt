@@ -18,19 +18,21 @@ import com.example.partnersapp.R
 import com.example.partnersapp.databinding.FragmentPartnersScreenBinding
 import com.example.partnersapp.model.partnerModels.TextViewModel
 import com.example.partnersapp.model.partnerModels.category.CategoryNew
+import com.example.partnersapp.model.partnerModels.category.PartnerCategoryDetail
 import com.example.partnersapp.presentation.adapter.AdapterCategoryNew
 import com.example.partnersapp.presentation.adapter.AdapterPartners
 import com.example.partnersapp.presentation.adapter.AdapterPartnersCategory
 import com.example.partnersapp.presentation.adapter.AdapterTextView
+import com.example.partnersapp.view.list_partner_in_category.ListPartnersInCategory
 import com.example.partnersapp.view.partnersScreen.viewModel.PartnersViewM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PartnersScreen : Fragment() {
     lateinit var binding: FragmentPartnersScreenBinding
+    private val adapterCategoryNew = AdapterCategoryNew(::selectItemCategoryNew)
+    private val adapterCategoryPartners = AdapterPartnersCategory(::selectItemCategory)
     private val adapterAllPartners = AdapterPartners()
-    private val adapterCategoryPartners = AdapterPartnersCategory()
-    private val adapterCategoryNew = AdapterCategoryNew()
     private val adapterTextView = AdapterTextView()
     private val viewModel: PartnersViewM by activityViewModels()
 
@@ -45,12 +47,28 @@ class PartnersScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapterTextView.setListTV(listOf(TextViewModel()))
-        adapterCategoryNew.setListNCateg(listOf(CategoryNew()))
+
         init()
+        adapterTextView.setListTV(listOf(TextViewModel()))
+        adapterCategoryNew.setListCategoryNew(listOf(CategoryNew()))
+
+
     }
 
     private fun init() {
+
+
+//        val itemClickListener = object : ItemClickListener {
+//            override fun onItemClickCategory(position: Int) {
+//                findNavController().navigate(R.id.action_partnersScreen_to_listPartnersInCategory)
+//
+////                setFragmentResultListener("itemPartnerCategory", bundleOf("bundleKey" to PartnerCategoryDetail().id ))
+//            }
+//
+//            override fun onItemClickPartners(position: Int) {
+//                TODO("Not yet implemented")
+//            }
+//        }
 
 
         val concatAdapter =
@@ -73,12 +91,24 @@ class PartnersScreen : Fragment() {
                 }
             }
         }
-
         showData()
         recyclerScrollListener()
         setListener()
 
+    }
 
+    private fun selectItemCategory(result: PartnerCategoryDetail) {
+        findNavController().navigate(
+            R.id.action_partnersScreen_to_listPartnersInCategory,
+            ListPartnersInCategory.getBundle(result)
+        )
+
+    }
+
+    private fun selectItemCategoryNew(results: CategoryNew) {
+//        findNavController().navigate(R.id.action_partnersScreen_to_listPartnersInCategory,
+//            ListPartnersInCategory.getBundleCategoryNew(results)
+//        )
     }
 
     private fun setListener() {
@@ -118,10 +148,9 @@ class PartnersScreen : Fragment() {
                     lifecycleScope.launch(Dispatchers.Main) {
                         val dataPage = viewModel.requestPartners()
                         if (dataPage != "Ok") {
-                            Toast.makeText(context, dataPage, Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, dataPage, Toast.LENGTH_SHORT).show()
                         }
                     }
-
 
                 }
             }
