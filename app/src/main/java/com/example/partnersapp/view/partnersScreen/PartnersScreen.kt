@@ -92,17 +92,12 @@ class PartnersScreen : Fragment() {
         recyclerScrollListener()
         setListener()
 
-
-
-
     }
-
 
     private fun setListener() {
         binding.imageButtonBack.setOnClickListener {
             findNavController().navigate(R.id.action_partnersScreen_to_authorization)
         }
-
 
     }
 
@@ -144,8 +139,6 @@ class PartnersScreen : Fragment() {
 
                 }
             }
-        }
-
-        )
+        })
     }
 }

@@ -2,9 +2,7 @@ package com.example.partnersapp.view.listPartnersFromCategory.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.partnersapp.model.partnerModels.allPartners.Partner
 import com.example.partnersapp.model.partnerModels.category.showCategory.DetailPartner
-import com.example.partnersapp.model.partnerModels.category.showCategory.ShowCategory
 import com.example.partnersapp.presentation.db.DataStoreManager
 import com.example.partnersapp.presentation.network.RetrofitClient
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,9 +18,9 @@ class PartnerFromCategoryViewModel(apl: Application) : AndroidViewModel(apl) {
     )
     val partnersFromCategory = _partnersFromCategory.asStateFlow()
 
-    suspend fun requestPartners(category_id:Int): String {
+    suspend fun requestPartners(categoryId:Int): String {
         val tokenM = dateS.loadToken()
-        val result = webRepo.retrofit.getListPartnersInCategory(cityId,category_id,"JWT $tokenM")
+        val result = webRepo.retrofit.getListPartnersInCategory(cityId,categoryId,"JWT $tokenM")
         return if (result.isSuccessful) {
             _partnersFromCategory.value = result.body()!!.detail
             "Ok"

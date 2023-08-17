@@ -58,6 +58,7 @@ class AdapterPartnersCategory(private val itemClickListener: ItemClickListener) 
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val view = RcItemCategoryBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
